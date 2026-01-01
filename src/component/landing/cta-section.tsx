@@ -1,6 +1,9 @@
 import { Route } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export default function CTASection() {
+    const navigate = useNavigate();
+
     return (
         <div className="w-full h-screen flex flex-col justify-center item-center px-5 md:px-10 xl:px-12">
             <h1 className="md:text-4xl text-2xl font-semibold text-white md:mb-2 mb-1 text-center">Agrowisata Lumbung Mataraman</h1>
@@ -11,6 +14,7 @@ export default function CTASection() {
             </div>
             <div className="w-full flex justify-center items-center my-5">
                 <div
+                    onClick={() => navigate('/destinations')}
                     className="
                         bg-white p-3 rounded-md flex items-center justify-center space-x-3
                         shadow-xl cursor-pointer
