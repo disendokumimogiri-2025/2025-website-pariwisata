@@ -12,9 +12,12 @@ import ReputationSection from "../component/landing/reputation-section";
 import EducationSection from "../component/landing/education-section";
 import DestinationOverviewSection from "../component/landing/destinationoverview-section";
 import CTASection from "../component/landing/cta-section";
+import { useIsMobile } from "../hook/use-mobile";
 
 export default function LandingScreen() {
   const parallaxRef = React.useRef<IParallax>(null!);
+  const ismobile = useIsMobile();
+
   return (
     <MainLayout>
       <Parallax ref={parallaxRef} pages={6}>
@@ -39,7 +42,8 @@ export default function LandingScreen() {
         {/* hero section */}
         <ParallaxLayer
           offset={0}
-          speed={0.2}
+          speed={0.1}
+          onClick={() => parallaxRef.current.scrollTo(5)}
         >
           <HeroSection />
         </ParallaxLayer>
@@ -66,6 +70,33 @@ export default function LandingScreen() {
           speed={0.2}
         >
           <DestinationOverviewSection />
+        </ParallaxLayer>
+
+
+        {/* destination overview card details 1 */}
+        <ParallaxLayer
+          offset={3}
+          speed={0.3}
+          style={{
+            visibility: ismobile ? "hidden" : "visible",
+          }}
+        >
+          <div className="relative w-full h-fit">
+            <div className="absolute left-10 bg-white w-[22vw] h-[22vw]" />
+          </div>
+        </ParallaxLayer>
+
+        {/* destination overview card details 2 */}
+        <ParallaxLayer
+          offset={3.6}
+          speed={0.5}
+          style={{
+            visibility: ismobile ? "hidden" : "visible",
+          }}
+        >
+          <div className="relative w-full h-fit">
+            <div className="absolute top-10 right-10 bg-white w-[40vw] h-[20vw]" />
+          </div>
         </ParallaxLayer>
 
         {/* reputation section */}
