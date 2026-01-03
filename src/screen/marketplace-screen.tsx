@@ -3,6 +3,8 @@ import MainLayout from "../component/main-layout"
 import destinationbackgroundxl from "../assets/destinations-background-xl.jpg"
 import destinationbackgroundsm from "../assets/destinations-background-sm.png"
 import { LayoutGrid, LayoutList, ScanSearch } from "lucide-react";
+import { dummydestinationdata } from "../connection/destination-connection";
+import DestinationCard from "../component/destinations/destination-card";
 
 export default function MarketplaceScreen() {
     return (
@@ -36,7 +38,7 @@ export default function MarketplaceScreen() {
                             </div>
                         </div>
 
-                        <div className="bg-white min-h-screen w-full flex flex-col justify-center items-center md:justify-center py-8 md:py-10">
+                        <div className="bg-white min-h-screen w-full flex flex-col justify-center items-center md:justify-start py-8 md:py-10">
                             <div className="w-full px-8 md:px-5 xl:px-10">
                                 <div className="flex w-full border border-gray-300 p-3 items-center justify-between rounded-md mb-10">
                                     <p>Exercitation ad </p>
@@ -47,15 +49,16 @@ export default function MarketplaceScreen() {
                                 </div>
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-10 md:gap-5">
-                                <div className="bg-white border border-gray-300 w-[85vw] h-[100vw] md:w-[30vw] md:h-[32vw] xl:w-[22vw] xl:h-[28vw] rounded-md cursor-pointer hover:shadow-md" />
-                                <div className="bg-white border border-gray-300 w-[85vw] h-[100vw] md:w-[30vw] md:h-[32vw] xl:w-[22vw] xl:h-[28vw] rounded-md cursor-pointer hover:shadow-md" />
-                                <div className="bg-white border border-gray-300 w-[85vw] h-[100vw] md:w-[30vw] md:h-[32vw] xl:w-[22vw] xl:h-[28vw] rounded-md cursor-pointer hover:shadow-md" />
-                                <div className="bg-white border border-gray-300 w-[85vw] h-[100vw] md:w-[30vw] md:h-[32vw] xl:w-[22vw] xl:h-[28vw] rounded-md cursor-pointer hover:shadow-md" />
-                                <div className="bg-white border border-gray-300 w-[85vw] h-[100vw] md:w-[30vw] md:h-[32vw] xl:w-[22vw] xl:h-[28vw] rounded-md cursor-pointer hover:shadow-md" />
-                                <div className="bg-white border border-gray-300 w-[85vw] h-[100vw] md:w-[30vw] md:h-[32vw] xl:w-[22vw] xl:h-[28vw] rounded-md cursor-pointer hover:shadow-md" />
-                                <div className="bg-white border border-gray-300 w-[85vw] h-[100vw] md:w-[30vw] md:h-[32vw] xl:w-[22vw] xl:h-[28vw] rounded-md cursor-pointer hover:shadow-md" />
-                                <div className="bg-white border border-gray-300 w-[85vw] h-[100vw] md:w-[30vw] md:h-[32vw] xl:w-[22vw] xl:h-[28vw] rounded-md cursor-pointer hover:shadow-md" />
-                                <div className="bg-white border border-gray-300 w-[85vw] h-[100vw] md:w-[30vw] md:h-[32vw] xl:w-[22vw] xl:h-[28vw] rounded-md cursor-pointer hover:shadow-md" />
+                                {dummydestinationdata.map((d, idx) => (
+                                    <DestinationCard
+                                        key={idx}
+                                        name={d.name}
+                                        desc={d.desc}
+                                        price={d.price}
+                                        status={d.status}
+                                        timestamps={d.timestamps}
+                                    />
+                                ))}
                             </div>
                         </div>
                     </div>

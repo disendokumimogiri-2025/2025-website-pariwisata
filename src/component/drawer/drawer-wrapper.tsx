@@ -21,7 +21,7 @@ export default function DrawerWrapper({ listcontent }: { listcontent: DrawerWrap
             <div className='h-screen w-screen flex justify-center items-end'>
                 <div
                     className={`border border-t bg-white border-gray-300 w-full p-5 rounded-t-2xl shadow-2xl transform transition-all duration-500 ease-in-out
-                    ${isFullScreen ? 'h-screen rounded-t-none' : 'md:h-[30vw] h-[50vw]'}
+                    ${isFullScreen ? 'h-screen rounded-t-none' : 'xl:h-[30vw] md:h-[50vw] h-[100vw]'}
                     ${drawerKind ? 'translate-y-0' : 'translate-y-full'}
                     `}
                 >
