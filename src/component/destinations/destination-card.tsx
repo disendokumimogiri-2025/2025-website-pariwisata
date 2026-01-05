@@ -4,36 +4,36 @@ import {
     DrawerKindEnum,
 } from "../../context-provider/drawer-context-provider";
 import { MoveUpRight } from "lucide-react";
-
-interface DestinationCardInterface {
-    name: string;
-    desc: string;
-    price: string;
-    status: string;
-    timestamps?: string;
-}
+import type { DestinationDataInterface } from "../../constant/data-types";
+import { DestinationDataContext } from "../../context-provider/destinationdata-context-provider";
 
 export default function DestinationCard({
+    _id,
     name,
     desc,
     price,
     status,
     timestamps,
-}: DestinationCardInterface) {
+    imageplaceholder,
+    attributes,
+    routes
+}: DestinationDataInterface) {
     const { setDrawerKind } = React.useContext(DrawerContext);
+    const { setSelectedId, setDestinationData } = React.useContext(DestinationDataContext);
 
     return (
         <div
             className="
                 bg-white border border-gray-300 rounded-md
-                w-[85vw] h-[100vw]
-                md:w-[30vw] md:h-[40vw]
-                xl:w-[22vw] xl:h-[30vw]
+                w-[85vw] h-fit
+                md:w-[30vw] md:h-[48vw]
+                lg:w-[30vw] lg:h-[35vw]
+                xl:w-[22vw] xl:h-[32vw]
                 hover:shadow-md
                 overflow-hidden
             "
         >
-            <div className="relative group w-full h-[55%]">
+            <div className="relative group w-full h-[60vw] md:h-[50%] xl:h-[55%]">
                 {/* IMAGE PLACEHOLDER */}
                 <div className="bg-gray-300 w-full h-full" />
 
@@ -63,7 +63,7 @@ export default function DestinationCard({
                 </div>
             </div>
 
-            <div className="p-2 space-y-2">
+            <div className="p-2 flex flex-col justify-between xl:space-y-2 lg:space-y-3 space-y-5">
                 <h1 className="xl:text-[18px] md:text-[12px] text-xl text-center text-gray-700 font-medium">
                     {name}
                 </h1>
@@ -87,7 +87,20 @@ export default function DestinationCard({
                         space-x-2 py-2 px-5 
                         cursor-pointer hover:bg-green-600
                     "
-                    onClick={() => setDrawerKind(DrawerKindEnum.destination)}
+                    onClick={() => {
+                        setSelectedId(_id);
+                        setDestinationData({
+                            _id: _id,
+                            name: name,
+                            desc: desc,
+                            price: price,
+                            imageplaceholder: imageplaceholder,
+                            status: status,
+                            attributes: attributes,
+                            routes: routes,
+                        })
+                        setDrawerKind(DrawerKindEnum.destination);
+                    }}
                 >
                     <button>Telusuri</button>
                     <MoveUpRight className="h-5 w-5 transition-transform hover:rotate-45" />

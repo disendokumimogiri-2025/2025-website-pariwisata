@@ -10,27 +10,30 @@ import CulinaryScreen from "./screen/culinary-screen";
 import DestinationsScreen from "./screen/destinations-screen";
 import AdminGatewayScreen from "./screen/admin-gateway-screen";
 import AdminDashboardScreen from "./screen/admin-dashboard-screen";
+import DestinationDataProvider from "./context-provider/destinationdata-context-provider";
 
 export default function App() {
   return (
     <NotificationProvider>
       <ModalProvider>
         <DrawerProvider>
-          <Router>
-            <Routes>
-              <Route path="/" element={<LandingScreen />} index />
-              <Route path="/education" element={<EducationScreen />} />
-              <Route path="/destinations" element={<MarketplaceScreen />} />
-              <Route path="/culinary" element={<CulinaryScreen />} />
-              <Route path="/destination/:id" element={<DestinationsScreen />} />
-              <Route path="/cta" element={<CTAScreen />} />
+          <DestinationDataProvider>
+            <Router>
+              <Routes>
+                <Route path="/" element={<LandingScreen />} index />
+                <Route path="/education" element={<EducationScreen />} />
+                <Route path="/destinations" element={<MarketplaceScreen />} />
+                <Route path="/culinary" element={<CulinaryScreen />} />
+                <Route path="/destination/:id" element={<DestinationsScreen />} />
+                <Route path="/cta" element={<CTAScreen />} />
 
-              {/* admin properties */}
-              <Route path="/admin/login" element={<AdminGatewayScreen />} />
-              <Route path="/admin/dashboard" element={<AdminDashboardScreen />} />
+                {/* admin properties */}
+                <Route path="/admin/login" element={<AdminGatewayScreen />} />
+                <Route path="/admin/dashboard" element={<AdminDashboardScreen />} />
 
-            </Routes>
-          </Router>
+              </Routes>
+            </Router>
+          </DestinationDataProvider>
         </DrawerProvider>
       </ModalProvider>
     </NotificationProvider>

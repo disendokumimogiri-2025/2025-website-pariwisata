@@ -2,11 +2,16 @@ import MainLayout from "../component/main-layout"
 
 import destinationbackgroundxl from "../assets/destinations-background-xl.jpg"
 import destinationbackgroundsm from "../assets/destinations-background-sm.png"
-import { LayoutGrid, LayoutList, ScanSearch } from "lucide-react";
+import { GalleryHorizontalEnd, LayoutGrid, ScanSearch } from "lucide-react";
+import DestinationLayoutgrid from "../component/destinations/destination-layoutgrid";
+import React from "react";
+import { DestinationDataContext, DestinationLayoutKindEnum } from "../context-provider/destinationdata-context-provider";
 import { dummydestinationdata } from "../connection/destination-connection";
-import DestinationCard from "../component/destinations/destination-card";
+import DestinationLayoutgallery from "../component/destinations/destination-layoutgallery";
+
 
 export default function MarketplaceScreen() {
+    const { setSelectedlayout, selectedlayout } = React.useContext(DestinationDataContext)
     return (
         <MainLayout>
             <div className="relative">
@@ -41,25 +46,21 @@ export default function MarketplaceScreen() {
                         <div className="bg-white min-h-screen w-full flex flex-col justify-center items-center md:justify-start py-8 md:py-10">
                             <div className="w-full px-8 md:px-5 xl:px-10">
                                 <div className="flex w-full border border-gray-300 p-3 items-center justify-between rounded-md mb-10">
-                                    <p>Exercitation ad </p>
+                                    <p className="text-sm flex items-center space-x-1">
+                                        <span className="hidden md:flex">Menampilkan Hasil Tampilan </span>
+                                        <span className="capitalize">{selectedlayout}</span>
+                                    </p>
                                     <div className="flex items-center space-x-5">
-                                        <LayoutList className="cursor-pointer" />
-                                        <LayoutGrid className="cursor-pointer" />
+                                        <GalleryHorizontalEnd className="cursor-pointer" onClick={() => setSelectedlayout(DestinationLayoutKindEnum.gallery)} />
+                                        <LayoutGrid className="cursor-pointer" onClick={() => setSelectedlayout(DestinationLayoutKindEnum.grid)} />
                                     </div>
                                 </div>
                             </div>
-                            <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-10 md:gap-5">
-                                {dummydestinationdata.map((d, idx) => (
-                                    <DestinationCard
-                                        key={idx}
-                                        name={d.name}
-                                        desc={d.desc}
-                                        price={d.price}
-                                        status={d.status}
-                                        timestamps={d.timestamps}
-                                    />
-                                ))}
-                            </div>
+                            {
+                                selectedlayout === DestinationLayoutKindEnum.grid
+                                    ? <DestinationLayoutgrid data={dummydestinationdata} />
+                                    : <DestinationLayoutgallery data={dummydestinationdata} />
+                            }
                         </div>
                     </div>
                 </div>

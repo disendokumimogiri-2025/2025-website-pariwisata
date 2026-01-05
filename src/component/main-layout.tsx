@@ -14,8 +14,8 @@ export default function MainLayout(
     console.log(needProtection);
 
     return (
-        <div className="w-full min-h-screen overflow-x-hidden">
-            <div className="w-full min-h-screen overflow-x-hidden">
+        <div className="w-full min-h-screen">
+            <div className="w-full min-h-screen">
                 {children}
             </div>
 

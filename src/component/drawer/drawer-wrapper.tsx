@@ -1,6 +1,8 @@
 import React from 'react';
 import { ArrowRight, ChevronsDown, ChevronsUp, X } from 'lucide-react';
 import { DrawerContext, DrawerKindEnum } from '../../context-provider/drawer-context-provider';
+import { DestinationDataContext } from '../../context-provider/destinationdata-context-provider';
+import { useNavigate } from 'react-router-dom';
 
 export interface DrawerWrapperInterface {
     name: DrawerKindEnum;
@@ -9,13 +11,15 @@ export interface DrawerWrapperInterface {
 
 export default function DrawerWrapper({ listcontent }: { listcontent: DrawerWrapperInterface[] }) {
     const { drawerKind, setDrawerKind } = React.useContext(DrawerContext);
+    const { _selectedId, setSelectedId } = React.useContext(DestinationDataContext);
     const [isFullScreen, setIsFullScreen] = React.useState(false);
+    const usenavigate = useNavigate();
 
     return (
         <div className={`
             ${drawerKind === null ? 'opacity-0 pointer-events-none'
-                    : 'opacity-100'
-                }
+                : 'opacity-100'
+            }
             fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center transition-opacity duration-300 ease-in-out
         `}>
             <div className='h-screen w-screen flex justify-center items-end'>
@@ -26,7 +30,16 @@ export default function DrawerWrapper({ listcontent }: { listcontent: DrawerWrap
                     `}
                 >
                     <div className="w-full flex items-center justify-end space-x-3">
-                        <div className="p-2 rounded-md hover:bg-gray-200 border border-gray-300 cursor-pointer transition">
+                        <div
+                            className="p-2 rounded-md hover:bg-gray-200 border border-gray-300 cursor-pointer transition"
+                            onClick={() => {
+                                if (!_selectedId) return
+                                usenavigate(`/destination/${_selectedId}`);
+                                setDrawerKind(null);
+                                // be carefull at this please be nice work at deployment 
+                                setSelectedId(null);
+                            }}
+                        >
                             <ArrowRight width={15} height={15} />
                         </div>
                         <div
@@ -36,7 +49,10 @@ export default function DrawerWrapper({ listcontent }: { listcontent: DrawerWrap
                             {isFullScreen ? <ChevronsDown width={15} height={15} /> : <ChevronsUp width={15} height={15} />}
                         </div>
                         <div
-                            onClick={() => { setDrawerKind(null) }}
+                            onClick={() => {
+                                setSelectedId(null);
+                                setDrawerKind(null);
+                            }}
                             className="p-2 rounded-md hover:bg-red-500 border border-gray-300 hover:text-white cursor-pointer transition"
                         >
                             <X width={15} height={15} />
