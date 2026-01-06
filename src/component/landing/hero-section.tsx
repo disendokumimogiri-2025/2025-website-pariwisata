@@ -13,7 +13,7 @@ export function TitleComponent() {
         >
             <TentTree className="transition-transform duration-300 delay-75 hover:scale-110" />
             <h1 className="transition-colors duration-300 delay-75">
-                Lumbung Mataraman
+                Lumbung Mataraman (ANGGIT SUKI)
             </h1>
         </div>
     );

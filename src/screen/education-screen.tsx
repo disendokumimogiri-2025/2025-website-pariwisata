@@ -4,7 +4,7 @@ export default function EducationScreen() {
     return (
         <MainLayout>
             <div>
-                EducationScreen
+                EducationScreen anggit suki
             </div>
         </MainLayout>
     );
