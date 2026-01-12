@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import LandingScreen from "./screen/landing-screen";
-import CTAScreen from "./screen/CTA-screen";
 import NotificationProvider from "./context-provider/notification-context-provider";
 import ModalProvider from "./context-provider/modal-context-provider";
 import DrawerProvider from "./context-provider/drawer-context-provider";
@@ -25,7 +24,6 @@ export default function App() {
                 <Route path="/destinations" element={<MarketplaceScreen />} />
                 <Route path="/culinary" element={<CulinaryScreen />} />
                 <Route path="/destination/:id" element={<DestinationsScreen />} />
-                <Route path="/cta" element={<CTAScreen />} />
 
                 {/* admin properties */}
                 <Route path="/admin/login" element={<AdminGatewayScreen />} />
