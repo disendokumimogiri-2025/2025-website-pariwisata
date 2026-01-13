@@ -2,7 +2,8 @@
 import { createContext, useState } from "react";
 
 export enum ModalKindEnum {
-    authentication = "authentication"
+    authentication = "authentication",
+    destinationroute = "destinationroute"
 }
 
 export type ModalContextType = {

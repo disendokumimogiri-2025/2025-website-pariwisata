@@ -92,7 +92,7 @@ export function MainCullinaryDestinationCard() {
                     "
                 >
                     <button
-                    onClick={() => usenavigate('/destination/1')}
+                    onClick={() => usenavigate('/culinary/1')}
                         className="
                             bg-green-800 text-white
                             px-6 py-2 rounded-md
@@ -128,7 +128,7 @@ export function SecCullinaryDestinationCard() {
                     "
                 >
                     <button
-                    onClick={() => usenavigate('/destination/1')}
+                    onClick={() => usenavigate('/culinary/1')}
                         className="
                             bg-green-800 text-white
                             px-6 py-2 rounded-md

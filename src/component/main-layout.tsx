@@ -23,7 +23,9 @@ export default function MainLayout(
 
             <ModalWrapper
                 listcontent={[
-                    {name: ModalKindEnum.authentication, component: <AuthenticationModal />, outerClose: true}
+                    {name: ModalKindEnum.authentication, component: <AuthenticationModal />, outerClose: true},
+                    {name: ModalKindEnum.destinationroute, component: <AuthenticationModal />, outerClose: true}
+
                 ]}
             />
             

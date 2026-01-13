@@ -1,6 +1,10 @@
+import { CircleDot, MapPinPlusInside, SquareDot, Tags } from "lucide-react";
 import MainLayout from "../component/main-layout"
+import React from "react";
+import { ModalContext, ModalKindEnum } from "../context-provider/modal-context-provider";
 
 export default function DestinationsScreen() {
+  const { setModalKind } = React.useContext(ModalContext);
   return (
     <MainLayout>
       <div className="w-full min-h-screen flex flex-col xl:gap-8 gap-5">
@@ -46,8 +50,107 @@ export default function DestinationsScreen() {
           </div>
 
           {/* side content */}
-          <div className="hidden md:flex md:w-[40vw]">
+          <div className="hidden xl:flex xl:flex-col xl:gap-10 xl:w-[40vw] xl:p-8 xl:mt-5">
+            <div className="w-full h-fit border border-gray-300 p-5 rounded-md flex flex-col gap-4">
+              <div className="w-full flex flex-col gap-2">
+                <h2>Detail dan Keterangan</h2>
+                <div className="w-full flex flex-col gap-2">
+                  <div className="flex items-center gap-2">
+                    <Tags className="w-5 h-5" />
+                    <p className="text-sm">Aliqua dolore incididunt eiusmod cillum deserunt.</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Tags className="w-5 h-5" />
+                    <p className="text-sm">Aliqua dolore incididunt eiusmod cillum deserunt.</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Tags className="w-5 h-5" />
+                    <p className="text-sm">Aliqua dolore incididunt eiusmod cillum deserunt.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="w-full flex flex-col">
+                <h2>Harga</h2>
+                <p>Rp. 10.000</p>
+              </div>
+
+            </div>
+
+            <div className="w-full h-fit border border-gray-300 p-5 rounded-md flex flex-col gap-4">
+              <h2 className="text-center text-xl pb-5">Perjalanan Paket Wisata</h2>
+              <div className="w-full grid grid-cols-2">
+                <div className="flex justify-center items-center">
+                  <MapPinPlusInside className="w-8 h-8" />
+                </div>
+
+                <div className="flex justify-center items-center" onClick={() => setModalKind(ModalKindEnum.destinationroute)}
+                >
+                  content
+                </div>
+                <div className="flex justify-center items-center h-[5vw]">
+                  <div className="h-full w-0.5 border bg-black rounded-md" />
+                </div>
+                <div className="flex justify-center items-center h-[5vw]">
+                  <div className="h-full w-0.5 border bg-black rounded-md" />
+                </div>
+
+                <div className="flex justify-center items-center">
+                  <MapPinPlusInside className="w-8 h-8" />
+                </div>
+                <div
+                  className="flex justify-center items-center" onClick={() => setModalKind(ModalKindEnum.destinationroute)}
+                >
+                  content
+                </div>
+                <div className="flex justify-center items-center h-[5vw]">
+                  <div className="h-full w-0.5 border bg-black rounded-md" />
+                </div>
+                <div className="flex justify-center items-center h-[5vw]">
+                  <div className="h-full w-0.5 border bg-black rounded-md" />
+                </div>
+
+                <div className="flex justify-center items-center">
+                  <MapPinPlusInside className="w-8 h-8" />
+                </div>
+                <div
+                  className="flex justify-center items-center" onClick={() => setModalKind(ModalKindEnum.destinationroute)}
+                >
+                  content
+                </div>
+                <div className="flex justify-center items-center h-[5vw]">
+                  <div className="h-full w-0.5 border bg-black rounded-md" />
+                </div>
+                <div className="flex justify-center items-center h-[5vw]">
+                  <div className="h-full w-0.5 border bg-black rounded-md" />
+                </div>
+
+                <div className="flex justify-center items-center">
+                  <MapPinPlusInside className="w-8 h-8" />
+                </div>
+                <div
+                  className="flex justify-center items-center" onClick={() => setModalKind(ModalKindEnum.destinationroute)}
+                >
+                  content
+                </div>
+                <div className="flex justify-center items-center h-[5vw]">
+                  <div className="h-full w-0.5 border bg-black rounded-md" />
+                </div>
+                <div className="flex justify-center items-center h-[5vw]">
+                  <div className="h-full w-0.5 border bg-black rounded-md" />
+                </div>
+
+                <div className="flex justify-center items-center">
+                  <SquareDot className="w-8 h-8" />
+                </div>
+                <div className="flex justify-center items-center">
+                  <CircleDot className="w-8 h-8" />
+                </div>
+
+              </div>
+            </div>
           </div>
+
         </div>
 
       </div>

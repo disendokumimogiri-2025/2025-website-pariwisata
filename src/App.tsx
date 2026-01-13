@@ -22,7 +22,7 @@ export default function App() {
                 <Route path="/" element={<LandingScreen />} index />
                 <Route path="/education" element={<EducationScreen />} />
                 <Route path="/destinations" element={<MarketplaceScreen />} />
-                <Route path="/culinary" element={<CulinaryScreen />} />
+                <Route path="/culinary/:id" element={<CulinaryScreen />} />
                 <Route path="/destination/:id" element={<DestinationsScreen />} />
 
                 {/* admin properties */}
