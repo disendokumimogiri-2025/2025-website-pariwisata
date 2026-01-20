@@ -6,12 +6,16 @@ import { GalleryHorizontalEnd, LayoutGrid, ScanSearch } from "lucide-react";
 import DestinationLayoutgrid from "../component/destinations/destination-layoutgrid";
 import React from "react";
 import { DestinationDataContext, DestinationLayoutKindEnum } from "../context-provider/destinationdata-context-provider";
-import { dummydestinationdata } from "../connection/destination-connection";
 import DestinationLayoutgallery from "../component/destinations/destination-layoutgallery";
+import { useFetchAllData } from "../connection/destination-connection";
 
 
 export default function MarketplaceScreen() {
     const { setSelectedlayout, selectedlayout } = React.useContext(DestinationDataContext)
+    const { data, loading, error } = useFetchAllData();
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error}</p>;
+
     return (
         <MainLayout>
             <div className="relative">
@@ -58,8 +62,8 @@ export default function MarketplaceScreen() {
                             </div>
                             {
                                 selectedlayout === DestinationLayoutKindEnum.grid
-                                    ? <DestinationLayoutgrid data={dummydestinationdata} />
-                                    : <DestinationLayoutgallery data={dummydestinationdata} />
+                                    ? <DestinationLayoutgrid data={data?.destination} />
+                                    : <DestinationLayoutgallery data={data?.destination} culinary={data?.culinary} />
                             }
                         </div>
                     </div>

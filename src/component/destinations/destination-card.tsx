@@ -13,10 +13,14 @@ export default function DestinationCard({
     desc,
     price,
     status,
-    timestamps,
-    imageplaceholder,
+    updatedAt,
+    blogimage,
     attributes,
-    routes
+    routes,
+    blogabstract,
+    blogtitle,
+    createdAt,
+    terms,
 }: DestinationDataInterface) {
     const { setDrawerKind } = React.useContext(DrawerContext);
     const { setSelectedId, setDestinationData } = React.useContext(DestinationDataContext);
@@ -56,7 +60,7 @@ export default function DestinationCard({
                             hover:bg-green-700
                             transition
                         "
-                        onClick={() => console.log(desc, timestamps)}
+                        onClick={() => console.log(desc, updatedAt)}
                     >
                         Pesan Sekarang
                     </button>
@@ -94,10 +98,15 @@ export default function DestinationCard({
                             name: name,
                             desc: desc,
                             price: price,
-                            imageplaceholder: imageplaceholder,
+                            blogimage: blogimage,
                             status: status,
                             attributes: attributes,
                             routes: routes,
+                            blogabstract: blogabstract,
+                            blogtitle: blogtitle,
+                            createdAt: createdAt,
+                            updatedAt: updatedAt,
+                            terms: terms,
                         })
                         setDrawerKind(DrawerKindEnum.destination);
                     }}
