@@ -1,7 +1,11 @@
+import React from "react";
 import { useNavigate } from "react-router-dom";
+import { DestinationDataContext } from "../../context-provider/destinationdata-context-provider";
+import { CulinaryDataInterface, DestinationDataInterface } from "../../constant/data-types";
 
-export function MainGalleryDestinationCard() {
+export function MainGalleryDestinationCard({ data }: { data: DestinationDataInterface }) {
     const usenavigate = useNavigate();
+    const { setDestinationData } = React.useContext(DestinationDataContext);
 
     return (
         <div className='w-[28vw] aspect-3/4 bg-gray-300 rounded-md hidden xl:block'>
@@ -18,7 +22,10 @@ export function MainGalleryDestinationCard() {
                     "
                 >
                     <button
-                    onClick={() => usenavigate('/destination/1')}
+                        onClick={() => {
+                            setDestinationData(data)
+                            usenavigate(`/destination/${data._id}`)
+                        }}
                         className="
                             bg-green-800 text-white
                             px-6 py-2 rounded-md
@@ -35,8 +42,10 @@ export function MainGalleryDestinationCard() {
     );
 }
 
-export function SecGalleryDestinationCard() {
+export function SecGalleryDestinationCard({ data }: { data: DestinationDataInterface }) {
     const usenavigate = useNavigate();
+    const { setDestinationData } = React.useContext(DestinationDataContext);
+
 
     return (
         <div className='w-[85%] md:w-[45%] shrink-0 aspect-6/5 border border-gray-400 rounded-md overflow-hidden'>
@@ -55,7 +64,10 @@ export function SecGalleryDestinationCard() {
                     "
                 >
                     <button
-                    onClick={() => usenavigate('/destination/1')}
+                        onClick={() => {
+                            setDestinationData(data)
+                            usenavigate(`/destination/${data._id}`)
+                        }}
                         className="
                             bg-green-800 text-white
                             px-6 py-2 rounded-md
@@ -74,7 +86,7 @@ export function SecGalleryDestinationCard() {
     );
 }
 
-export function MainCullinaryDestinationCard() {
+export function MainCullinaryDestinationCard({ data }: { data: CulinaryDataInterface }) {
     const usenavigate = useNavigate();
 
     return (
@@ -92,7 +104,9 @@ export function MainCullinaryDestinationCard() {
                     "
                 >
                     <button
-                    onClick={() => usenavigate('/culinary/1')}
+                        onClick={() => {
+                            usenavigate(`/culinary/${data._id}`)
+                        }}
                         className="
                             bg-green-800 text-white
                             px-6 py-2 rounded-md
@@ -109,7 +123,7 @@ export function MainCullinaryDestinationCard() {
     );
 }
 
-export function SecCullinaryDestinationCard() {
+export function SecCullinaryDestinationCard({ data }: { data: CulinaryDataInterface }) {
     const usenavigate = useNavigate();
 
     return (
@@ -128,7 +142,9 @@ export function SecCullinaryDestinationCard() {
                     "
                 >
                     <button
-                    onClick={() => usenavigate('/culinary/1')}
+                        onClick={() => {
+                            usenavigate(`/culinary/${data._id}`)
+                        }}
                         className="
                             bg-green-800 text-white
                             px-6 py-2 rounded-md

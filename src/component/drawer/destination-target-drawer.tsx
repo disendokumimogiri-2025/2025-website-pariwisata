@@ -7,7 +7,7 @@ import { DestinationDataContext } from "../../context-provider/destinationdata-c
 export default function DestinationTargetDrawer() {
   const usenavigate = useNavigate()
   const { setDrawerKind } = React.useContext(DrawerContext);
-  const { _selectedId } = React.useContext(DestinationDataContext);
+  const { destinationData } = React.useContext(DestinationDataContext);
 
   return (
     <div className="w-full my-4 mx-2 overflow-auto">
@@ -15,52 +15,43 @@ export default function DestinationTargetDrawer() {
 
         {/* galery showcase */}
         <div className="xl:w-[50%] w-full space-y-4">
-          <div className="w-full aspect-5/3 bg-gray-300 rounded-md" />
+          <div className="w-full aspect-5/3 bg-gray-300 rounded-md overflow-hidden">
+            <img src={`https://drive.google.com/thumbnail?id=${destinationData?.blogimage}`} alt="image blog overview" className="w-full content-center object-cover" />
+          </div>
           <div className="w-full md:flex items-center xl:justify-start space-x-2 hidden">
-            <div className="w-[15%] aspect-5/3 bg-gray-600 rounded-md cursor-pointer" />
-            <div className="w-[15%] aspect-5/3 bg-gray-600 rounded-md cursor-pointer" />
-            <div className="w-[15%] aspect-5/3 bg-gray-600 rounded-md cursor-pointer" />
-            <div className="w-[15%] aspect-5/3 bg-gray-600 rounded-md cursor-pointer" />
-            <div className="w-[15%] aspect-5/3 bg-gray-600 rounded-md cursor-pointer" />
-            <div className="w-[15%] aspect-5/3 bg-gray-600 rounded-md cursor-pointer" />
+            {destinationData?.routes?.map((_route, routeidx) => (
+              <div className="w-[15%] aspect-5/3 bg-gray-600 rounded-md cursor-pointer" key={routeidx} />
+            ))}
           </div>
         </div>
 
         <div className="xl:w-[50%] w-full xl:aspect-8/6 flex flex-col xl:justify-between justify-start xl:px-5 px-2 space-y-5 xl:space-y-0">
-          <h1 className="xl:text-2xl text-xl text-center">Occaecat exercitation mollit sunt ipsum aliquip culpa pariatur.</h1>
+          <h1 className="xl:text-2xl text-xl text-center">{destinationData?.name}</h1>
           <p className="text-justify text-[12px] md:text-sm">
-            Nostrud sunt culpa amet minim velit non eiusmod.
-            Duis consequat eu velit ex non commodo ullamco consectetur adipisicing.
-            Minim deserunt velit proident ullamco.
-            Cupidatat ullamco nisi aute proident.
+            {destinationData?.desc}
           </p>
           <div className="space-y-0 xl:px-5 px-2 hidden md:flex md:flex-col md:space-y-1">
-            <div className="flex items-center space-x-1 text-sm">
-              <Info className="w-4 h-4" />
-              <p>Sunt aliqua deserunt consequat consequat ut.</p>
-            </div>
-            <div className="flex items-center space-x-1 text-sm">
-              <Info className="w-4 h-4" />
-              <p>Sunt aliqua deserunt consequat consequat ut.</p>
-            </div>
-            <div className="flex items-center space-x-1 text-sm">
-              <Info className="w-4 h-4" />
-              <p>Sunt aliqua deserunt consequat consequat ut.</p>
-            </div>
-            <div className="flex items-center space-x-1 text-sm">
-              <Info className="w-4 h-4" />
-              <p>Sunt aliqua deserunt consequat consequat ut.</p>
-            </div>
+            {destinationData?.terms?.map((term, termidx) => (
+              <div className="flex items-center space-x-1 text-sm" key={termidx}>
+                <div className="w-[10%]">
+                  <Info className="w-4 h-4" />
+                </div>
+                <div className="w-[90%]">
+                  <p>{term.term_title}</p>
+                  <p className="text-[10px]">{term.term_desc}</p>
+                </div>
+              </div>
+            ))}
           </div>
           <div>
-            <p>Sunt aliqua</p>
-            <p>Sunt aliqua</p>
+            <p>{destinationData?.price}</p>
+            <p>{destinationData?.status}</p>
           </div>
           <div className="w-full space-y-2">
             <div
               onClick={() => {
                 setDrawerKind(null)
-                usenavigate(`/destination/${_selectedId}`);
+                usenavigate(`/destination/${destinationData?._id}`);
               }}
               className="bg-yellow-400 text-white flex justify-center items-center space-x-2 p-2 rounded-md cursor-pointer"
             >
