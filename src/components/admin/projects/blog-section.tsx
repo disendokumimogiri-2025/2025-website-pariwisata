@@ -125,7 +125,7 @@ function HeadData() {
           id="blogcover"
           required
           className="resize-none"
-          onChange={(e) => setBlogcover(getDriveId(e.target.value))}
+          onChange={(e) => setBlogcover(e.target.value)}
           value={blogcover}
         />
         <div onClick={() => setIsCulinary(!isCulinary)}>
