@@ -332,10 +332,7 @@ export default function LandingPageSection() {
       <div className='flex w-full items-end justify-between'>
         <div>
           <ContentEditor data={pageapidata} />
-        </div>
-        <div className=''>
-          <ViewPortMode />
-        </div>
+        </div> 
       </div>
     </div>
   );

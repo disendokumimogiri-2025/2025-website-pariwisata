@@ -1,5 +1,4 @@
 import React from "react"
-import { ViewPortMode } from "./landing-page-section"
 
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
@@ -22,6 +21,8 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { AdminCreateEditContext } from "@/context-provider/context-provider-type"
+import { useUpdatePagesCOntent } from "@/hooks/connection-hook/admin-connection"
+import type { InternalWebsitePageData } from "@/types/data-types"
 
 
 type TermsComponentProps = {
@@ -41,7 +42,6 @@ function TermsComponent({ value, onChange, onDelete }: TermsComponentProps) {
         className="resize-none"
       />
       <div className="flex gap-3">
-        <Button size="sm">OK</Button>
         <Button size="sm" variant="destructive" onClick={onDelete}>
           Delete
         </Button>
@@ -59,6 +59,8 @@ type ContentEditorProps = {
 
   termcondition: string[]
   setTermcondition: React.Dispatch<React.SetStateAction<string[]>>
+
+  handleSubmit: () => void
 }
 
 function ContentEditor({
@@ -68,6 +70,7 @@ function ContentEditor({
   setPrivacypolicysubtitle,
   termcondition,
   setTermcondition,
+  handleSubmit
 }: ContentEditorProps) {
   const addTerm = () => {
     setTermcondition((prev) => [...prev, ""])
@@ -151,7 +154,7 @@ function ContentEditor({
         </div>
 
         <SheetFooter>
-          <Button type="submit">OK</Button>
+          <Button type="submit" onClick={() => handleSubmit()}>OK</Button>
           <SheetClose asChild>
             <Button variant="outline">Cancel</Button>
           </SheetClose>
@@ -163,11 +166,51 @@ function ContentEditor({
 
 
 export default function PrivacyPolicySection() {
-  const { pageapidata } = React.useContext(AdminCreateEditContext);
+  const { pageapidata, setFlag, flag } = React.useContext(AdminCreateEditContext);
 
   const [privacypolicytitle, setPrivacypolicytitle] = React.useState(pageapidata?.privacypolicytitle)
-  const [privacypolicysubtitle, setPrivacypolicysubtitle] = React.useState(pageapidata?.herosubtitle)
-  const [termcondition, setTermcondition] = React.useState<string[]>(pageapidata?.termcondition ?? [])
+  const [privacypolicysubtitle, setPrivacypolicysubtitle] = React.useState(pageapidata?.privacypolicysubtitle)
+  const [termcondition, setTermcondition] = React.useState<string[]>(pageapidata?.termcondition ?? []);
+
+  React.useEffect(() => {
+    if (!pageapidata) return
+
+    setPrivacypolicytitle(pageapidata.privacypolicytitle ?? "")
+    setPrivacypolicysubtitle(pageapidata.herosubtitle ?? "")
+    setTermcondition(pageapidata.termcondition ?? [])
+  }, [pageapidata])
+
+  const { updateInternalwebdata, message, error, loading } = useUpdatePagesCOntent<InternalWebsitePageData, InternalWebsitePageData>(pageapidata?._id ?? '');
+
+  const handleSubmit = async () => {
+    if (!pageapidata || !privacypolicytitle || !privacypolicysubtitle) return;
+    try {
+      await updateInternalwebdata({
+        aboutabstract: pageapidata?.aboutabstract,
+        abouttitle: pageapidata?.abouttitle,
+        educationabstract: pageapidata?.educationabstract,
+        educationsubtitle: pageapidata?.educationsubtitle,
+        educationtitle: pageapidata?.educationtitle,
+        herotitle: pageapidata?.herotitle,
+        herosubtitle: pageapidata?.herosubtitle,
+        heroabstract: pageapidata?.heroabstract,
+        heroimageplaceholder: pageapidata?.heroimageplaceholder,
+        paketwisataabstract: pageapidata?.paketwisataabstract,
+        paketwisatasubtitle: pageapidata?.paketwisatasubtitle,
+        paketwisatatitle: pageapidata?.paketwisatatitle,
+        souvenirabstract: pageapidata?.souvenirabstract,
+        souvenirsubtitle: pageapidata?.souvenirsubtitle,
+        souvenirtitle: pageapidata?.souvenirtitle,
+        privacypolicytitle: privacypolicytitle,
+        privacypolicysubtitle: privacypolicysubtitle,
+        termcondition: termcondition
+      })
+      setFlag(!flag)
+    } catch { console.log(error, message) }
+  }
+
+  if (loading) return <div>loading</div>
+
 
   return (
     <div className="w-full p-10">
@@ -180,10 +223,8 @@ export default function PrivacyPolicySection() {
             setPrivacypolicysubtitle={setPrivacypolicysubtitle}
             termcondition={termcondition}
             setTermcondition={setTermcondition}
+            handleSubmit={handleSubmit}
           />
-        </div>
-        <div>
-          <ViewPortMode />
         </div>
       </div>
     </div>

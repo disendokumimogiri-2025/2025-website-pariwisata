@@ -10,7 +10,7 @@ enum LayoutViewEnum {
 }
 
 export default function MarketplaceScreen() {
-  const [selectedlayout, setSelectedlayout] = React.useState<LayoutViewEnum>(LayoutViewEnum.gallery)
+  const [selectedlayout, setSelectedlayout] = React.useState<LayoutViewEnum>(LayoutViewEnum.gallery);
   return (
     <MainLayout>
       <div className="min-h-screen off-white-pallate pt-[35vw] sm:pt-[24vw] md:pt-[12vw] lg:pt-[8vw]">

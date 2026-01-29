@@ -94,6 +94,8 @@ function AddEducationItem() {
   const [contentDesc, setContentDesc] = React.useState("");
   const [contentImage, setContentImage] = React.useState("");
 
+  const { flag, setFlag } = React.useContext(AdminCreateEditContext)
+
   const { createEduData, message, loading, error } = useCreateEducation();
 
   const handlesubmit = async () => {
@@ -107,6 +109,7 @@ function AddEducationItem() {
         contentdesc: contentDesc,
         contentimage: getDriveId(contentImage),
       })
+      setFlag(flag)
       console.log(message, error)
     } catch (error) {
       console.log(error)

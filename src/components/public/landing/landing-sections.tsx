@@ -1,6 +1,6 @@
 import defaultHeroBackground from '@/assets/default-hero-background.jpg'
 import type { AboutSectionContentSection, BlogData, CouraselComponent, EducationContentSection, EducationData, HeroSectionContentSection, PaketWisataContentSection, SouvenirContentSection, SouvenirData } from '@/types/data-types';
-import { EdukasiPublikasiCard, GalleryCard, PaketWisataCard, SouvenirCard } from './courasel-cards';
+import { EdukasiPublikasiCard, GalleryCard, PaketWisataCard, SouvenirCard, SouvenirCardView } from './courasel-cards';
 import EmblaLoopCarousel from './EmblaLoopCarousel';
 import { useNavigate } from 'react-router-dom';
 import { getRenderableDriveLink } from '@/helper/drive-helper';
@@ -92,8 +92,8 @@ export function AboutSection({ aboutdata }: { aboutdata: AboutSectionContentSect
 }
 
 export function WisataKulinerSection({ wisatadata, blogdatas }: { wisatadata: PaketWisataContentSection, blogdatas: BlogData[] }) {
-    const couraselData: CouraselComponent[] = blogdatas.map((_blog, idx) => (
-        { id: idx, component: <PaketWisataCard /> }
+    const couraselData: CouraselComponent[] = blogdatas.map((blog, idx) => (
+        { id: idx, component: <PaketWisataCard imagePlaceHolder={blog.imageplaceholder} price={blog.price} title={blog.name} /> }
     ))
 
     const usenavigate = useNavigate();
@@ -139,8 +139,8 @@ export function WisataKulinerSection({ wisatadata, blogdatas }: { wisatadata: Pa
 }
 
 export function EducationSection({ edudata, edudatas }: { edudata: EducationContentSection, edudatas: EducationData[] }) {
-    const couraselData: CouraselComponent[] = edudatas.map((_blog, idx) => (
-        { id: idx, component: <EdukasiPublikasiCard /> }
+    const couraselData: CouraselComponent[] = edudatas.map((edu, idx) => (
+        { id: idx, component: <EdukasiPublikasiCard imagePlaceHolder={edu.imageplaceholder} title={edu.name} /> }
     ))
 
     const usenavigate = useNavigate();
@@ -178,8 +178,8 @@ export function EducationSection({ edudata, edudatas }: { edudata: EducationCont
 }
 
 export function SouvenirSection({ souvenridata, data }: { souvenridata: SouvenirContentSection, data: SouvenirData[] }) {
-    const couraselData: CouraselComponent[] = data.map((_blog, idx) => (
-        { id: idx, component: <SouvenirCard /> }
+    const couraselData: CouraselComponent[] = data.map((souv, idx) => (
+        { id: idx, component: <SouvenirCard imagePlaceHolder={souv.imageplaceholder} price={souv.price} title={souv.name} /> }
     ))
 
     console.log(data)
@@ -191,9 +191,16 @@ export function SouvenirSection({ souvenridata, data }: { souvenridata: Souvenir
             <div className='w-full flex flex-col justify-center items-center gap-5'>
                 <h1 className='text-[#27422d] text-2xl font-semibold font-comfortaa w-fit'>{souvenridata.souvenirtitle}</h1>
             </div>
-            <div className='w-full xl:w-[60%] aspect-square xl:aspect-5/2 flex items-center justify-center'>
+            <div className='w-full aspect-square xl:aspect-auto flex items-center justify-center'>
                 <div className='w-full xl:hidden'>
                     <EmblaLoopCarousel listContent={couraselData} />
+                </div>
+                <div className='w-full hidden xl:flex'>
+                    <div className='w-full grid grid-cols-3 gap-10'>
+                        <SouvenirCardView />
+                        <SouvenirCardView />
+                        <SouvenirCardView />
+                    </div>
                 </div>
             </div>
             <button

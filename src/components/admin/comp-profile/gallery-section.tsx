@@ -29,17 +29,18 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import { getDriveId } from "@/helper/drive-helper";
+import { getDriveId, getRenderableDriveLink } from "@/helper/drive-helper";
 
 import React from "react";
 import { useCreateGallery, useDeleteData } from "@/hooks/connection-hook/admin-connection";
 import { AdminCreateEditContext } from "@/context-provider/context-provider-type";
+import { ReduceChar } from "@/helper/word-reducer";
 
 function AddGalleryItem() {
     const [order, setOrder] = React.useState(0);
 
-      const { setFlag, flag } = React.useContext(AdminCreateEditContext)
-    
+    const { setFlag, flag } = React.useContext(AdminCreateEditContext)
+
 
     const [gallerytitle, setGallerytitle] = React.useState("");
     const [gallerydesc, setGallerydesc] = React.useState("");
@@ -129,27 +130,28 @@ function AddGalleryItem() {
 }
 
 function DeleteData({ id }: { id: string }) {
-  const { message, deleteData } = useDeleteData("gallery", id);
+    const { message, deleteData } = useDeleteData("gallery", id);
 
-  const handledelete = async () => {
-    try {
-      await deleteData();
-    } catch (error) {
-      console.log(error)
-      console.log(message)
+    const handledelete = async () => {
+        try {
+            await deleteData();
+        } catch (error) {
+            console.log(error)
+            console.log(message)
+        }
     }
-  }
-  return (
-    <div
-      onClick={() => { handledelete() }}
-    >
-      Delete
-    </div>
-  )
+    return (
+        <div
+            onClick={() => { handledelete() }}
+        >
+            Delete
+        </div>
+    )
 }
 
 export default function GallerySection() {
     const { galleyapidata } = React.useContext(AdminCreateEditContext)
+    
     return (
         <div className="w-full h-full py-20 px-10 flex flex-col justify-start items-end gap-10">
             <div className="w-full flex justify-end">
@@ -173,8 +175,8 @@ export default function GallerySection() {
                         <TableRow key={idx}>
                             <TableCell>{gallery.order}</TableCell>
                             <TableCell>{gallery.status === 1 ? 'Published' : 'Unpublished'}</TableCell>
-                            <TableCell>{gallery.gallerytitle}</TableCell>
-                            <TableCell>{gallery.galleryimage}</TableCell>
+                            <TableCell>{ReduceChar(gallery.gallerytitle)}</TableCell>
+                            <TableCell>{ReduceChar(gallery.galleryimage)}</TableCell>
                             <TableCell>
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
@@ -184,7 +186,7 @@ export default function GallerySection() {
                                         </Button>
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent align="end">
-                                        <DropdownMenuItem>Copy Link</DropdownMenuItem>
+                                        <DropdownMenuItem onClick={() => navigator.clipboard.writeText(getRenderableDriveLink(gallery.galleryimage))}>Copy Link</DropdownMenuItem>
                                         <DropdownMenuSeparator />
                                         <DropdownMenuItem>
                                             <DeleteData id={gallery._id ?? ''} />

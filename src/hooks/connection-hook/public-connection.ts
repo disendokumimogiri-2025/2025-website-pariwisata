@@ -123,6 +123,12 @@ interface BlogDataByIresponseInterface {
   error?: string;
 }
 
+interface EducationDataByIresponseInterface {
+  education: EducationData;
+  msg: string;
+  error?: string;
+}
+
 export const useFetchBlogData = (id: string) => {
   const [blogData, setBlogData] = useState<BlogData | null>(null);
 
@@ -164,6 +170,54 @@ export const useFetchBlogData = (id: string) => {
 
   return {
     blogData,
+    loading,
+    error,
+    message,
+    refetch: fetchAllData,
+  };
+};
+
+export const useFetchEduData = (id: string) => {
+  const [eduData, setEdudata] = useState<EducationData | null>(null);
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [message, setMessage] = useState<string | null>(null);
+
+  const fetchAllData = async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await axios.get<EducationDataByIresponseInterface>(
+        `${import.meta.env.VITE_PUBLIC_API_URl_PROD}/pub/education/${id}`,
+      );
+
+      if (response.status === 200) {
+        setEdudata(response.data.education);
+        setMessage(response.data.msg);
+      } else {
+        throw response.data.msg;
+      }
+    } catch (err: unknown) {
+      const errorMessage =
+        err instanceof axios.AxiosError
+          ? err.response?.data?.message || err.message
+          : err instanceof Error
+            ? err.message
+            : "Something went wrong";
+      setError(errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchAllData();
+  }, [id]);
+
+  return {
+    eduData,
     loading,
     error,
     message,
