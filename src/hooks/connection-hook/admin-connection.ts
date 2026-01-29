@@ -7,12 +7,16 @@ import type {
   InternalWebsitePageData,
   SouvenirData,
 } from "@/types/data-types";
+import { STORAGE_KEY_AUTHTOKEN } from "@/context-provider/context-provider-type";
 
 export const useCreateBlog = <TPayload, TBlog>() => {
   const [blog, setBlog] = useState<TBlog | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const token = localStorage.getItem(STORAGE_KEY_AUTHTOKEN);
+  const headerName = import.meta.env.VITE_SERVER_PRIVATE_ADMIN_HEADER;
 
   const createBlog = async (payload: TPayload) => {
     setLoading(true);
@@ -26,6 +30,11 @@ export const useCreateBlog = <TPayload, TBlog>() => {
       }>(
         `${import.meta.env.VITE_PUBLIC_API_URl_PROD}/adm/create/blog`,
         payload,
+        {
+          headers: {
+            [headerName]: token,
+          },
+        },
       );
 
       if (response.status === 201) {
@@ -70,7 +79,7 @@ interface AdminBlogDataresponseInterface {
 }
 
 export const useFetchAllDataForAdmin = () => {
-  const [blogData, setBlogData] = useState<BlogData[]>([]);
+  const [blogData, setdata] = useState<BlogData[]>([]);
   const [eduData, setEduData] = useState<EducationData[]>([]);
   const [souvenirData, setSouvenirData] = useState<SouvenirData[]>([]);
   const [galleyData, setGalleyData] = useState<GalleryData[]>([]);
@@ -86,13 +95,21 @@ export const useFetchAllDataForAdmin = () => {
     setLoading(true);
     setError(null);
 
+    const token = localStorage.getItem(STORAGE_KEY_AUTHTOKEN);
+    const headerName = import.meta.env.VITE_SERVER_PRIVATE_ADMIN_HEADER;
+
     try {
       const response = await axios.get<AdminBlogDataresponseInterface>(
         `${import.meta.env.VITE_PUBLIC_API_URl_PROD}/adm/content`,
+        {
+          headers: {
+            [headerName]: token,
+          },
+        },
       );
 
       if (response.status === 200) {
-        setBlogData(response.data.blogs);
+        setdata(response.data.blogs);
         setEduData(response.data.educations);
         setSouvenirData(response.data.souvenirs);
         setGalleyData(response.data.gallery);
@@ -140,6 +157,9 @@ export const useUpdatePagesCOntent = <TPayload, Tinternalwebdata>(
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const token = localStorage.getItem(STORAGE_KEY_AUTHTOKEN);
+  const headerName = import.meta.env.VITE_SERVER_PRIVATE_ADMIN_HEADER;
+
   const updateInternalwebdata = async (payload: TPayload) => {
     setLoading(true);
     setError(null);
@@ -152,6 +172,11 @@ export const useUpdatePagesCOntent = <TPayload, Tinternalwebdata>(
       }>(
         `${import.meta.env.VITE_PUBLIC_API_URl_PROD}/adm/update/pagescontent/${id}`,
         payload,
+        {
+          headers: {
+            [headerName]: token,
+          },
+        },
       );
 
       if (response.status === 201) {
@@ -185,8 +210,8 @@ export const useUpdatePagesCOntent = <TPayload, Tinternalwebdata>(
   };
 };
 
-export const useUpdateBlog = <TPayload, Tblogdata>(id: string) => {
-  const [blog, setBlog] = useState<Tblogdata | null>(null);
+export const useUpdateBlog = <TPayload, Tdata>(id: string) => {
+  const [blog, setBlog] = useState<Tdata | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -196,13 +221,21 @@ export const useUpdateBlog = <TPayload, Tblogdata>(id: string) => {
     setError(null);
     setMessage(null);
 
+    const token = localStorage.getItem(STORAGE_KEY_AUTHTOKEN);
+    const headerName = import.meta.env.VITE_SERVER_PRIVATE_ADMIN_HEADER;
+
     try {
       const response = await axios.patch<{
         msg: string;
-        data: Tblogdata;
+        data: Tdata;
       }>(
         `${import.meta.env.VITE_PUBLIC_API_URl_PROD}/adm/update/blog/${id}`,
         payload,
+        {
+          headers: {
+            [headerName]: token,
+          },
+        },
       );
 
       if (response.status === 201) {
@@ -236,11 +269,14 @@ export const useUpdateBlog = <TPayload, Tblogdata>(id: string) => {
   };
 };
 
-export const useUpdateEdu = <TPayload, Tblogdata>(id: string) => {
-  const [edu, setEdu] = useState<Tblogdata | null>(null);
+export const useUpdateEdu = <TPayload, Tdata>(id: string) => {
+  const [edu, setEdu] = useState<Tdata | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const token = localStorage.getItem(STORAGE_KEY_AUTHTOKEN);
+  const headerName = import.meta.env.VITE_SERVER_PRIVATE_ADMIN_HEADER;
 
   const updateEduData = async (payload: TPayload) => {
     setLoading(true);
@@ -250,10 +286,15 @@ export const useUpdateEdu = <TPayload, Tblogdata>(id: string) => {
     try {
       const response = await axios.patch<{
         msg: string;
-        data: Tblogdata;
+        data: Tdata;
       }>(
         `${import.meta.env.VITE_PUBLIC_API_URl_PROD}/adm/update/edu/${id}`,
         payload,
+        {
+          headers: {
+            [headerName]: token,
+          },
+        },
       );
 
       if (response.status === 200) {
@@ -287,11 +328,14 @@ export const useUpdateEdu = <TPayload, Tblogdata>(id: string) => {
   };
 };
 
-export const useCreateEducation = <TPayload, Tblogdata>() => {
-  const [edu, setEdu] = useState<Tblogdata | null>(null);
+export const useCreateEducation = <TPayload, Tdata>() => {
+  const [edu, setEdu] = useState<Tdata | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const token = localStorage.getItem(STORAGE_KEY_AUTHTOKEN);
+  const headerName = import.meta.env.VITE_SERVER_PRIVATE_ADMIN_HEADER;
 
   const createEduData = async (payload: TPayload) => {
     setLoading(true);
@@ -301,8 +345,16 @@ export const useCreateEducation = <TPayload, Tblogdata>() => {
     try {
       const response = await axios.post<{
         msg: string;
-        data: Tblogdata;
-      }>(`${import.meta.env.VITE_PUBLIC_API_URl_PROD}/adm/create/edu`, payload);
+        data: Tdata;
+      }>(
+        `${import.meta.env.VITE_PUBLIC_API_URl_PROD}/adm/create/edu`,
+        payload,
+        {
+          headers: {
+            [headerName]: token,
+          },
+        },
+      );
 
       if (response.status === 201) {
         setEdu(response.data.data);
@@ -335,11 +387,13 @@ export const useCreateEducation = <TPayload, Tblogdata>() => {
   };
 };
 
-export const useCreateSouvenir = <TPayload, Tblogdata>() => {
-  const [souvenir, setSouvenir] = useState<Tblogdata | null>(null);
+export const useCreateSouvenir = <TPayload, Tdata>() => {
+  const [souvenir, setSouvenir] = useState<Tdata | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const token = localStorage.getItem(STORAGE_KEY_AUTHTOKEN);
+  const headerName = import.meta.env.VITE_SERVER_PRIVATE_ADMIN_HEADER;
 
   const createSouvenir = async (payload: TPayload) => {
     setLoading(true);
@@ -349,10 +403,15 @@ export const useCreateSouvenir = <TPayload, Tblogdata>() => {
     try {
       const response = await axios.post<{
         msg: string;
-        data: Tblogdata;
+        data: Tdata;
       }>(
         `${import.meta.env.VITE_PUBLIC_API_URl_PROD}/adm/create/souvenir`,
         payload,
+        {
+          headers: {
+            [headerName]: token,
+          },
+        },
       );
 
       if (response.status === 201) {
@@ -386,11 +445,14 @@ export const useCreateSouvenir = <TPayload, Tblogdata>() => {
   };
 };
 
-export const useCreateGallery = <TPayload, Tblogdata>() => {
-  const [gallery, setGallery] = useState<Tblogdata | null>(null);
+export const useCreateGallery = <TPayload, Tdata>() => {
+  const [gallery, setGallery] = useState<Tdata | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const token = localStorage.getItem(STORAGE_KEY_AUTHTOKEN);
+  const headerName = import.meta.env.VITE_SERVER_PRIVATE_ADMIN_HEADER;
 
   const createGallery = async (payload: TPayload) => {
     setLoading(true);
@@ -400,10 +462,15 @@ export const useCreateGallery = <TPayload, Tblogdata>() => {
     try {
       const response = await axios.post<{
         msg: string;
-        data: Tblogdata;
+        data: Tdata;
       }>(
         `${import.meta.env.VITE_PUBLIC_API_URl_PROD}/adm/create/gallery`,
         payload,
+        {
+          headers: {
+            [headerName]: token,
+          },
+        },
       );
 
       if (response.status === 201) {
@@ -437,11 +504,14 @@ export const useCreateGallery = <TPayload, Tblogdata>() => {
   };
 };
 
-export const useUpdateSouvenir = <TPayload, Tblogdata>(id: string) => {
-  const [souvenir, setSouvenir] = useState<Tblogdata | null>(null);
+export const useUpdateSouvenir = <TPayload, Tdata>(id: string) => {
+  const [souvenir, setSouvenir] = useState<Tdata | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const token = localStorage.getItem(STORAGE_KEY_AUTHTOKEN);
+  const headerName = import.meta.env.VITE_SERVER_PRIVATE_ADMIN_HEADER;
 
   const updateSouvenirData = async (payload: TPayload) => {
     setLoading(true);
@@ -451,10 +521,15 @@ export const useUpdateSouvenir = <TPayload, Tblogdata>(id: string) => {
     try {
       const response = await axios.patch<{
         msg: string;
-        data: Tblogdata;
+        data: Tdata;
       }>(
         `${import.meta.env.VITE_PUBLIC_API_URl_PROD}/adm/update/souvenir/${id}`,
         payload,
+        {
+          headers: {
+            [headerName]: token,
+          },
+        },
       );
 
       if (response.status === 200) {
@@ -495,6 +570,8 @@ export const useDeleteData = <TResponse>(
   const [message, setMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const token = localStorage.getItem(STORAGE_KEY_AUTHTOKEN);
+  const headerName = import.meta.env.VITE_SERVER_PRIVATE_ADMIN_HEADER;
 
   const deleteData = async () => {
     setLoading(true);
@@ -507,6 +584,11 @@ export const useDeleteData = <TResponse>(
         data: TResponse;
       }>(
         `${import.meta.env.VITE_PUBLIC_API_URl_PROD}/adm/delete/${endpoint}/${id}`,
+        {
+          headers: {
+            [headerName]: token,
+          },
+        },
       );
 
       if (response.status === 200) {
