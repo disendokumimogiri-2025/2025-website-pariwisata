@@ -8,48 +8,48 @@ export default function LandingScreen() {
 
     if (loading) return <div>loading</div>
     if (error) return <div>error</div>
-    if (!data || !blogdata || !edudata || !souvenirdata) return null
+    // if (!data || !blogdata || !edudata || !souvenirdata) return null
 
     return (
         <MainLayout>
             {/* hero section */}
             <HeroSection
                 herodata={{
-                    heroabstract: data.heroabstract ?? 'Laboris do magna cupidatat excepteur do dolore anim pariatur irure duis eu.',
-                    herosubtitle: data.herosubtitle ?? 'Lorem qui amet amet amet.',
-                    herotitle: data.herotitle ?? 'Lumbung Mataraman Sriharjo',
-                    heroimageplaceholder: data.heroimageplaceholder
+                    heroabstract: data?.heroabstract ?? 'Laboris do magna cupidatat excepteur do dolore anim pariatur irure duis eu.',
+                    herosubtitle: data?.herosubtitle ?? 'Lorem qui amet amet amet.',
+                    herotitle: data?.herotitle ?? 'Lumbung Mataraman Sriharjo',
+                    heroimageplaceholder: data?.heroimageplaceholder
                 }}
             />
 
             {/* paket wisata dan kuliner section */}
             <AboutSection
                 aboutdata={{
-                    abouttitle: data.abouttitle ?? 'Lumbung Mataraman',
-                    aboutabstract: data.aboutabstract ?? "Voluptate eiusmod culpa aliquip aliqua eiusmod consequat ea. Quis reprehenderit dolore mollit enim fugiat id sit nulla deserunt. Esse duis veniam consequat Lorem dolor do esse adipisicing sit. Aliqua qui ea nulla aliqua pariatur."
+                    abouttitle: data?.abouttitle ?? 'Lumbung Mataraman',
+                    aboutabstract: data?.aboutabstract ?? "Voluptate eiusmod culpa aliquip aliqua eiusmod consequat ea. Quis reprehenderit dolore mollit enim fugiat id sit nulla deserunt. Esse duis veniam consequat Lorem dolor do esse adipisicing sit. Aliqua qui ea nulla aliqua pariatur."
                 }}
             />
 
             {/* paket wisata dan kuliner section */}
             <WisataKulinerSection
-                blogdatas={blogdata}
+                blogdatas={blogdata ?? []}
                 wisatadata={{
-                    paketwisataabstract: data.paketwisataabstract ?? "Voluptate eiusmod culpa aliquip aliqua eiusmod consequat ea. Quis reprehenderit dolore mollit enim fugiat id sit nulla deserunt. Esse duis veniam consequat Lorem dolor do esse adipisicing sit. Aliqua qui ea nulla aliqua pariatur."
+                    paketwisataabstract: data?.paketwisataabstract ?? "Voluptate eiusmod culpa aliquip aliqua eiusmod consequat ea. Quis reprehenderit dolore mollit enim fugiat id sit nulla deserunt. Esse duis veniam consequat Lorem dolor do esse adipisicing sit. Aliqua qui ea nulla aliqua pariatur."
                 }}
             />
 
             {/* edukasi section */}
             <EducationSection
-                edudatas={edudata}
+                edudatas={edudata ?? []}
                 edudata={{
-                    educationtitle: data.educationtitle ?? "Riset Edukasi dan Publikasi"
+                    educationtitle: data?.educationtitle ?? "Riset Edukasi dan Publikasi"
                 }}
             />
 
             {/* souvenir section */}
             <SouvenirSection
-                souvenridata={{ souvenirtitle: data.souvenirtitle ?? "Souvenir Lumbung Mataraman" }}
-                data={souvenirdata}
+                souvenridata={{ souvenirtitle: data?.souvenirtitle ?? "Souvenir Lumbung Mataraman" }}
+                data={souvenirdata ?? []}
             />
 
         </MainLayout>
