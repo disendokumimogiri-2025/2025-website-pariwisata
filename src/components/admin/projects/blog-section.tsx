@@ -141,7 +141,7 @@ function HeadData() {
                 blogtitle: blogtitle,
                 isClinary: isCulinary === true ? 1 : 0,
                 blogabstract: blogabstract,
-                blogcover: getDriveId(blogabstract),
+                blogcover: getDriveId(blogcover),
               })
               usenavigate('/admin/blog/create')
             }}
