@@ -238,7 +238,7 @@ export const useUpdateBlog = <TPayload, Tdata>(id: string) => {
         },
       );
 
-      if (response.status === 201) {
+      if (response.status === 200) {
         setBlog(response.data.data);
         setMessage(response.data.msg);
         return response.data.data;

@@ -6,9 +6,11 @@ import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Textarea } from "@/components/ui/textarea";
+import { AdminCreateEditContext } from "@/context-provider/context-provider-type";
 import { getDriveId, getRenderableDriveLink } from "@/helper/drive-helper";
+import { useUpdateBlog } from "@/hooks/connection-hook/admin-connection";
 import { useFetchBlogData } from "@/hooks/connection-hook/public-connection";
-import { type AdderContentBlogComponentProps, type BlogContentData, type BlogHeadData } from "@/types/data-types";
+import { type AdderContentBlogComponentProps, type BlogContentData, type BlogHeadData, type HeadDataProps } from "@/types/data-types";
 import { PencilRuler, Tags } from "lucide-react";
 import React from "react";
 import { useParams } from "react-router-dom";
@@ -27,11 +29,12 @@ export function AdderContentBlogComponent({
 
   const handleOk = () => {
     setIsOk(true);
+    const driveId = getDriveId(image)
     onAdd({
       ...data,
       title,
       content,
-      image,
+      image: driveId,
     });
   };
 
@@ -50,7 +53,7 @@ export function AdderContentBlogComponent({
           <Textarea value={content} onChange={e => setContent(e.target.value)} />
 
           <FieldLabel>Image</FieldLabel>
-          <Input value={image} onChange={e => setImage(getDriveId(e.target.value))} />
+          <Input value={image} onChange={e => setImage(e.target.value)} />
 
           <div className="flex gap-2">
             <Button variant="outline" onClick={handleOk} disabled={isOk}>
@@ -64,6 +67,45 @@ export function AdderContentBlogComponent({
               Hapus
             </Button>
           </div>
+        </Field>
+      </CollapsibleContent>
+    </Collapsible>
+  );
+}
+
+export function HeadDataComponent({
+  blogtitle,
+  blogabstract,
+  blogcover,
+  setBlogtitle,
+  setBlogabstract,
+  setBlogcover,
+}: HeadDataProps) {
+  return (
+    <Collapsible defaultOpen>
+      <CollapsibleTrigger className="p-4 rounded-md border border-gray-200 w-full text-start font-semibold">
+        Blog Head Data
+      </CollapsibleTrigger>
+
+      <CollapsibleContent className="px-2 py-3 space-y-3">
+        <Field>
+          <FieldLabel>Blog Title</FieldLabel>
+          <Textarea
+            value={blogtitle}
+            onChange={(e) => setBlogtitle(e.target.value)}
+          />
+
+          <FieldLabel>Blog Abstract</FieldLabel>
+          <Textarea
+            value={blogabstract}
+            onChange={(e) => setBlogabstract(e.target.value)}
+          />
+
+          <FieldLabel>Blog Image Cover</FieldLabel>
+          <Input
+            value={blogcover}
+            onChange={(e) => setBlogcover(e.target.value)}
+          />
         </Field>
       </CollapsibleContent>
     </Collapsible>
@@ -124,6 +166,42 @@ export default function AdminEditBlogScreen() {
 
   const deleteContent = (ordernum: number) => {
     setBlogContent(prev => prev ? prev.filter(item => item.ordernum !== ordernum) : null);
+  }
+
+  const updateHeadData = <K extends keyof BlogHeadData>(
+    key: K,
+    value: BlogHeadData[K]
+  ) => {
+    setBlogheaddata(prev =>
+      prev ? { ...prev, [key]: value } : prev
+    );
+  };
+
+  const { updateBlogData } = useUpdateBlog(id);
+  const { flag, setFlag } = React.useContext(AdminCreateEditContext)
+
+  const handleSubmit = async () => {
+    if (!blogheaddata || !blogData) return
+    try {
+      await updateBlogData({
+        name: blogData?.name,
+        desc: blogData?.desc,
+        status: blogData?.status,
+        price: blogData.price,
+        prior: blogData.prior,
+        imageplaceholder: blogData.imageplaceholder,
+        blogtitle: blogheaddata.blogtitle,
+        blogabstract: blogheaddata.blogabstract,
+        blogcover: getDriveId(blogheaddata.blogcover ?? ''),
+        isClinary: blogheaddata.isClinary,
+        contents: blogContent,
+      })
+      setFlag(!flag);
+      window.location.href = `/admin/blog/edit/${id}`;
+    } catch (error) {
+      console.log(error)
+      console.log(message)
+    }
   }
 
   if (loading) return <div>{loading}</div>
@@ -199,7 +277,7 @@ export default function AdminEditBlogScreen() {
       <div className='fixed bottom-[20vw] xl:bottom-[5vw] left-[10vw] xl:left-[3vw]'>
         <div>
           <Sheet>
-            <SheetTrigger asChild>
+            <SheetTrigger>
               <Button variant="outline">
                 <PencilRuler className="md:w-20 w-24 md:h-20 h-24" />
               </Button>
@@ -214,29 +292,16 @@ export default function AdminEditBlogScreen() {
               <div className='overflow-y-scroll'>
                 <div className='h-[80vh] px-5 space-y-5'>
 
-                  <Collapsible defaultOpen>
-                    <CollapsibleTrigger className="p-4 rounded-md border border-gray-200 w-full text-start font-semibold">
-                      Blog Head Data
-                    </CollapsibleTrigger>
-
-                    <CollapsibleContent className="px-2 py-3 space-y-3">
-                      <Field>
-                        <FieldLabel>Blog Title</FieldLabel>
-                        <Textarea value={blogheaddata?.blogtitle} />
-
-                        <FieldLabel>Blog Abstract</FieldLabel>
-                        <Textarea value={blogheaddata?.blogabstract} />
-
-                        <FieldLabel>Blog Image Cover</FieldLabel>
-                        <Input value={blogheaddata?.blogcover} />
-
-                        <div className="flex gap-2">
-                          <Button variant="outline" >
-                            OK
-                          </Button>
-                        </div>
-                      </Field></CollapsibleContent>
-                  </Collapsible>
+                  {blogheaddata && (
+                    <HeadDataComponent
+                      blogtitle={blogheaddata.blogtitle || ''}
+                      blogabstract={blogheaddata.blogabstract || ''}
+                      blogcover={getRenderableDriveLink(blogheaddata.blogcover) || ''}
+                      setBlogtitle={(v) => updateHeadData("blogtitle", v)}
+                      setBlogabstract={(v) => updateHeadData("blogabstract", v)}
+                      setBlogcover={(v) => updateHeadData("blogcover", v)}
+                    />
+                  )}
 
 
                   {blogContent?.map(item => (
@@ -252,7 +317,7 @@ export default function AdminEditBlogScreen() {
                 </div>
               </div>
               <SheetFooter>
-                <Button type="submit">
+                <Button type="submit" onClick={() => handleSubmit()}>
                   Submit
                 </Button>
                 <SheetClose asChild>

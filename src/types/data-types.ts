@@ -175,3 +175,12 @@ export type AdderContentBlogComponentProps = {
   onAdd: (data: BlogContentData) => void;
   onDelete: (ordernum: number) => void;
 };
+
+export interface HeadDataProps {
+  blogtitle: string;
+  blogabstract: string;
+  blogcover: string;
+  setBlogtitle: (v: string) => void;
+  setBlogabstract: (v: string) => void;
+  setBlogcover: (v: string) => void;
+}
