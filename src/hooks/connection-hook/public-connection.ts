@@ -129,6 +129,12 @@ interface EducationDataByIresponseInterface {
   error?: string;
 }
 
+interface SouvenirDataByIresponseInterface {
+  souvenir: SouvenirData;
+  msg: string;
+  error?: string;
+}
+
 export const useFetchBlogData = (id: string) => {
   const [blogData, setBlogData] = useState<BlogData | null>(null);
 
@@ -218,6 +224,54 @@ export const useFetchEduData = (id: string) => {
 
   return {
     eduData,
+    loading,
+    error,
+    message,
+    refetch: fetchAllData,
+  };
+};
+
+export const useFetchSouvenirData = (id: string) => {
+  const [souvData, setSouvData] = useState<SouvenirData | null>(null);
+
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [message, setMessage] = useState<string | null>(null);
+
+  const fetchAllData = async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await axios.get<SouvenirDataByIresponseInterface>(
+        `${import.meta.env.VITE_PUBLIC_API_URl_PROD}/pub/souvenir/${id}`,
+      );
+
+      if (response.status === 200) {
+        setSouvData(response.data.souvenir);
+        setMessage(response.data.msg);
+      } else {
+        throw response.data.msg;
+      }
+    } catch (err: unknown) {
+      const errorMessage =
+        err instanceof axios.AxiosError
+          ? err.response?.data?.message || err.message
+          : err instanceof Error
+            ? err.message
+            : "Something went wrong";
+      setError(errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchAllData();
+  }, [id]);
+
+  return {
+    souvData,
     loading,
     error,
     message,

@@ -164,7 +164,6 @@ export default function GallerySection() {
                 <TableHeader>
                     <TableRow>
                         <TableHead className="w-25">Order</TableHead>
-                        <TableHead>Status</TableHead>
                         <TableHead>Title</TableHead>
                         <TableHead>Image Link</TableHead>
                         <TableHead>Action</TableHead>
@@ -174,7 +173,6 @@ export default function GallerySection() {
                     {galleyapidata?.map((gallery, idx) => (
                         <TableRow key={idx}>
                             <TableCell>{gallery.order}</TableCell>
-                            <TableCell>{gallery.status === 1 ? 'Published' : 'Unpublished'}</TableCell>
                             <TableCell>{ReduceChar(gallery.gallerytitle)}</TableCell>
                             <TableCell>{ReduceChar(gallery.galleryimage)}</TableCell>
                             <TableCell>

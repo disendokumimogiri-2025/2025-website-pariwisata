@@ -82,3 +82,37 @@ export const AdminCreateEditContext = createContext<AdminCreateEditContextType>(
     setJwtToken: () => {},
   },
 );
+
+export interface BookInterface {
+  name: string | null;
+  count?: number | null;
+  priceOffered?: number | null;
+  dateBook?: string | null;
+}
+
+export type CustomerContextType = {
+  name: string | null;
+  bookIds: string[] | null;
+  messages: string | null;
+  bookItem: BookInterface[] | null;
+
+  setName: (d: string | null) => void;
+  setBookIds: (d: string[] | null) => void;
+  setMessages: (d: string | null) => void;
+  setBookItem: (d: BookInterface[] | null) => void;
+};
+
+export const STORAGE_KEY_BOOKITEM = "customer-book-item";
+export const STORAGE_KEY_BOOKIDS = "customer-bookids";
+
+export const CustomerContext = createContext<CustomerContextType>({
+  name: null,
+  bookIds: null,
+  messages: null,
+  bookItem: null,
+
+  setName: () => {},
+  setBookIds: () => {},
+  setMessages: () => {},
+  setBookItem: () => {},
+});
