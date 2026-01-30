@@ -8,7 +8,6 @@ export default function LandingScreen() {
 
     if (loading) return <div>loading</div>
     if (error) return <div>error</div>
-    // if (!data || !blogdata || !edudata || !souvenirdata) return null
 
     return (
         <MainLayout>

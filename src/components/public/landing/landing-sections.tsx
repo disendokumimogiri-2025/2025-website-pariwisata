@@ -178,7 +178,7 @@ export function EducationSection({ edudata, edudatas }: { edudata: EducationCont
 }
 
 export function SouvenirSection({ souvenridata, data }: { souvenridata: SouvenirContentSection, data: SouvenirData[] }) {
-    const couraselData: CouraselComponent[] = data.map((souv, idx) => (
+    const couraselData: CouraselComponent[] = data.slice(0, 3).map((souv, idx) => (
         { id: idx, component: <SouvenirCard imagePlaceHolder={souv.imageplaceholder} price={souv.price} title={souv.name} /> }
     ))
 
@@ -197,9 +197,9 @@ export function SouvenirSection({ souvenridata, data }: { souvenridata: Souvenir
                 </div>
                 <div className='w-full hidden xl:flex'>
                     <div className='w-full grid grid-cols-3 gap-10'>
-                        <SouvenirCardView />
-                        <SouvenirCardView />
-                        <SouvenirCardView />
+                        {data.map((d, idx) => (
+                            <SouvenirCardView d={d} key={idx} />
+                        ))}                        
                     </div>
                 </div>
             </div>

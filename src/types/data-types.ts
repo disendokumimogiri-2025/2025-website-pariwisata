@@ -165,7 +165,7 @@ export interface BlogDataInterface {
 }
 
 export interface GetMarketPlaceDataInterface extends GetDataFromAPIInterface {
-  blogs: BlogContentData[];
+  blogs: BlogData[];
   souvenirs: SouvenirData[];
   educations: EducationData[];
 }
