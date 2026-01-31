@@ -32,7 +32,6 @@ export function PaketWisataCard({ imagePlaceHolder, title, price }: { imagePlace
 }
 
 export function EdukasiPublikasiCard({ imagePlaceHolder, title }: { imagePlaceHolder: string | null, title: string }) {
-    console.log(getRenderableDriveLink(imagePlaceHolder))
     return (
         <div className="w-full aspect-3/4 xl:aspect-3/2 relative">
             <img

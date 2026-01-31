@@ -1,6 +1,6 @@
 export default function N8NSection() {
   return (
-    <div>
+    <div className="w-full">
       N8NSection
     </div>
   );

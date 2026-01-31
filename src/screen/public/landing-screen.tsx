@@ -4,7 +4,7 @@ import { useFetchLandingData } from "@/hooks/connection-hook/public-connection";
 
 export default function LandingScreen() {
 
-    const { data, blogdata, edudata, souvenirdata, error, loading } = useFetchLandingData();
+    const { data, blogdata, edudata, souvenirdata, error, loading, gallery } = useFetchLandingData();
 
     if (loading) return <div>loading</div>
     if (error) return <div>error</div>
@@ -23,9 +23,10 @@ export default function LandingScreen() {
 
             {/* paket wisata dan kuliner section */}
             <AboutSection
+                galleriesData={gallery ?? []}
                 aboutdata={{
                     abouttitle: data?.abouttitle ?? 'Lumbung Mataraman',
-                    aboutabstract: data?.aboutabstract ?? "Voluptate eiusmod culpa aliquip aliqua eiusmod consequat ea. Quis reprehenderit dolore mollit enim fugiat id sit nulla deserunt. Esse duis veniam consequat Lorem dolor do esse adipisicing sit. Aliqua qui ea nulla aliqua pariatur."
+                    aboutabstract: data?.aboutabstract ?? "Voluptate eiusmod culpa aliquip aliqua eiusmod consequat ea. Quis reprehenderit dolore mollit enim fugiat id sit nulla deserunt. Esse duis veniam consequat Lorem dolor do esse adipisicing sit. Aliqua qui ea nulla aliqua pariatur.",
                 }}
             />
 

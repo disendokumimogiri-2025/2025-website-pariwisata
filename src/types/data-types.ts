@@ -156,6 +156,7 @@ export interface InternalWebsiteContentInterface {
   blogs: BlogData[];
   souvenirs: SouvenirData[];
   educations: EducationData[];
+  gallery: GalleryData[];
 }
 
 export interface BlogDataInterface {

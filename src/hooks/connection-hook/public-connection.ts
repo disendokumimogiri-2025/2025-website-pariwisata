@@ -10,6 +10,7 @@ import {
   type EducationData,
   type BlogData,
   type SouvenirData,
+  type GalleryData,
 } from "@/types/data-types";
 
 export const useFetchLandingData = () => {
@@ -25,6 +26,11 @@ export const useFetchLandingData = () => {
   const [souvenirdata, setSouvenirdata] = useState<SouvenirData[] | null>(
     null,
   );
+
+  const [gallery, setGallery] = useState<GalleryData[] | null>(
+    null,
+  );
+
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -42,6 +48,7 @@ export const useFetchLandingData = () => {
         setEdudata(response.data.educations);
         setBlogdata(response.data.blogs);
         setSouvenirdata(response.data.souvenirs);
+        setGallery(response.data.gallery);
       } else {
         throw response.data.msg;
       }
@@ -68,6 +75,7 @@ export const useFetchLandingData = () => {
     souvenirdata,
     edudata,
     loading,
+    gallery,
     error,
     refetch: fetchAllData,
   };

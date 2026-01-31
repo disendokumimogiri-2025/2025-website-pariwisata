@@ -1,6 +1,19 @@
-import { Instagram, LogIn, MapPinned, Menu, X, Youtube } from 'lucide-react';
+import { CustomerContext } from '@/context-provider/context-provider-type';
+import { Instagram, LogIn, MapPinned, Menu, ShoppingBag, X, Youtube } from 'lucide-react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+
+import {
+    Sheet,
+    SheetContent,
+    SheetDescription,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
+} from "@/components/ui/sheet"
+import { Button } from "@/components/ui/button";
+import { Input } from './ui/input';
+import { Textarea } from './ui/textarea';
 
 function NavigationBar() {
     const [open, setOpen] = React.useState(false);
@@ -160,16 +173,106 @@ function FooterNavigation() {
 }
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
+    const { setName, bookItem, setMessages, name, messages } = React.useContext(CustomerContext);
+
     return (
-        <div className='w-full min-h-screen'>
-            {/* navbar */}
-            <div className='w-full h-fit'>
-                <NavigationBar />
-            </div>
+        <div className="w-full min-h-screen relative">
+            {/* Navbar */}
+            <NavigationBar />
 
             {children}
 
-            {/* footer */}
+            <Sheet>
+                <SheetTrigger asChild>
+                    <Button
+                        variant="default"
+                        className="fixed bottom-6 right-6 z-50 rounded-full w-16 h-16 shadow-lg flex items-center justify-center">
+                        <ShoppingBag className="w-7 h-7" />
+                    </Button>
+                </SheetTrigger>
+
+                <SheetContent className="flex flex-col">
+                    <SheetHeader>
+                        <SheetTitle>Pengajuan Pemesanan</SheetTitle>
+                        <SheetDescription>
+                            Silakan lengkapi data pemesanan Anda. Tim kami akan menghubungi Anda
+                            setelah pengajuan diterima.
+                        </SheetDescription>
+                    </SheetHeader>
+
+                    {/* CONTENT */}
+                    <div className="flex-1 overflow-y-auto mt-6 space-y-6 px-10">
+                        {/* Identitas Pemesan */}
+                        <div className="space-y-2">
+                            <h3 className="text-sm font-semibold text-muted-foreground">
+                                Identitas Pemesan
+                            </h3>
+                            <Input
+                                placeholder="Nama Anda"
+                                value={name ?? ""}
+                                onChange={(e) => setName(e.target.value)}
+                            />
+                        </div>
+
+                        {/* Daftar Item */}
+                        <div className="space-y-3">
+                            <h3 className="text-sm font-semibold text-muted-foreground">
+                                Item Pesanan
+                            </h3>
+
+                            {bookItem && bookItem.length > 0 ? (
+                                <div className="space-y-3">
+                                    {bookItem.map((item, idx) => (
+                                        <div
+                                            key={idx}
+                                            className="flex items-center justify-between rounded-lg border p-3"
+                                        >
+                                            <div>
+                                                <p className="font-medium">{item.name}</p>
+                                                <p className="text-xs text-muted-foreground">
+                                                    {item.priceOffered}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="text-sm text-muted-foreground border rounded-lg p-4 text-center">
+                                    Belum ada item yang dipilih
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Catatan */}
+                        <div className="space-y-2">
+                            <h3 className="text-sm font-semibold text-muted-foreground">
+                                Catatan Tambahan
+                            </h3>
+                            <Textarea
+                                placeholder="Tulis catatan atau kebutuhan khusus..."
+                                value={messages ?? ""}
+                                onChange={(e) => setMessages(e.target.value)}
+                            />
+                        </div>
+                    </div>
+
+                    {/* FOOTER ACTION */}
+                    <div className="border-t pt-4 space-y-2 px-10">
+                        <Button
+                            className="w-full"
+                            disabled={!name || !bookItem || bookItem.length === 0}
+                        >
+                            Ajukan Pemesanan
+                        </Button>
+
+                        <p className="text-xs text-muted-foreground text-center">
+                            Dengan mengajukan pemesanan, Anda menyetujui untuk dihubungi oleh tim kami.
+                        </p>
+                    </div>
+                </SheetContent>
+
+            </Sheet>
+
             <FooterNavigation />
         </div>
     );

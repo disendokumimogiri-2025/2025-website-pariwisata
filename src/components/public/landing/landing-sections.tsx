@@ -1,5 +1,5 @@
 import defaultHeroBackground from '@/assets/default-hero-background.jpg'
-import type { AboutSectionContentSection, BlogData, CouraselComponent, EducationContentSection, EducationData, HeroSectionContentSection, PaketWisataContentSection, SouvenirContentSection, SouvenirData } from '@/types/data-types';
+import type { AboutSectionContentSection, BlogData, CouraselComponent, EducationContentSection, EducationData, GalleryData, HeroSectionContentSection, PaketWisataContentSection, SouvenirContentSection, SouvenirData } from '@/types/data-types';
 import { EdukasiPublikasiCard, GalleryCard, PaketWisataCard, SouvenirCard, SouvenirCardView } from './courasel-cards';
 import EmblaLoopCarousel from './EmblaLoopCarousel';
 import { useNavigate } from 'react-router-dom';
@@ -57,7 +57,7 @@ export function HeroSection({ herodata }: { herodata: HeroSectionContentSection 
     )
 }
 
-export function AboutSection({ aboutdata }: { aboutdata: AboutSectionContentSection }) {
+export function AboutSection({ aboutdata, galleriesData }: { aboutdata: AboutSectionContentSection, galleriesData: GalleryData[] }) {
     const couraselData: CouraselComponent[] = [
         { id: 0, component: <GalleryCard /> },
         { id: 1, component: <GalleryCard /> },
@@ -66,6 +66,21 @@ export function AboutSection({ aboutdata }: { aboutdata: AboutSectionContentSect
         { id: 4, component: <GalleryCard /> },
         { id: 5, component: <GalleryCard /> },
     ];
+
+    const sortedGalleries = [...galleriesData].sort(
+        (a, b) => a.order - b.order
+    );
+
+    const gridMap: Record<number, string> = {
+        1: "col-span-2 row-span-2",
+        2: "col-span-2",
+        3: "col-span-2 row-span-2",
+        4: "",
+        5: "",
+        6: "",
+        7: "",
+        8: "col-span-2",
+    };
 
     return (
         <section className="w-full min-h-screen flex items-center justify-center off-white-pallate" id='about'>
@@ -82,9 +97,22 @@ export function AboutSection({ aboutdata }: { aboutdata: AboutSectionContentSect
                     <div className='w-full md:hidden'>
                         <EmblaLoopCarousel listContent={couraselData} />
                     </div>
-                    {/* sm scroll embela */}
-                    {/* md gallery */}
-                    {/* xl gallery */}
+                    <div className="w-full h-full hidden md:block">
+                        <div className="w-full h-full grid grid-cols-4 grid-rows-4 gap-2">
+                            {sortedGalleries.map((item) => (
+                                <div
+                                    key={item._id}
+                                    className={`w-full h-full rounded-md overflow-hidden relative ${gridMap[item.order]}`}
+                                >
+                                    <img
+                                        src={getRenderableDriveLink(item.galleryimage)}
+                                        alt={item.gallerytitle}
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -199,7 +227,7 @@ export function SouvenirSection({ souvenridata, data }: { souvenridata: Souvenir
                     <div className='w-full grid grid-cols-3 gap-10'>
                         {data.map((d, idx) => (
                             <SouvenirCardView d={d} key={idx} />
-                        ))}                        
+                        ))}
                     </div>
                 </div>
             </div>

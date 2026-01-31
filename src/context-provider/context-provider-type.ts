@@ -88,6 +88,7 @@ export interface BookInterface {
   count?: number | null;
   priceOffered?: number | null;
   dateBook?: string | null;
+  imageUrl?: string | null;
 }
 
 export type CustomerContextType = {

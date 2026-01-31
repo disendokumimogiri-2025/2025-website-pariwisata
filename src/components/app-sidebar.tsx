@@ -61,11 +61,6 @@ const data = {
           option: DashboardOptionEnum.n8n,
         },
         {
-          title: "Scanner",
-          url: "#",
-          option: DashboardOptionEnum.report2digitalscanner,
-        },
-        {
           title: "Telegram Summary",
           url: "#",
           option: DashboardOptionEnum.telegram,
