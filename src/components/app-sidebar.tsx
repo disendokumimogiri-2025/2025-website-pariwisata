@@ -3,7 +3,6 @@
 import * as React from "react"
 import {
   BookOpen,
-  Bot,
   Frame,
   Shirt,
   SquareTerminal,
@@ -47,23 +46,6 @@ const data = {
           title: "Edukasi",
           url: "#",
           option: DashboardOptionEnum.edukasi,
-        },
-      ],
-    },
-    {
-      title: "Automatiasasi",
-      url: "#",
-      icon: Bot,
-      items: [
-        {
-          title: "n8n",
-          url: "#",
-          option: DashboardOptionEnum.n8n,
-        },
-        {
-          title: "Telegram Summary",
-          url: "#",
-          option: DashboardOptionEnum.telegram,
         },
       ],
     },
