@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Bot, Instagram, LogIn, MapPinned, Menu, X, Youtube } from 'lucide-react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -201,20 +202,64 @@ function FooterNavigation() {
 function LumbungMataramanBot() {
     const [open, setOpen] = React.useState(false);
     const [message, setMessage] = React.useState("");
+    const [loading, setLoading] = React.useState(false);
+
     const [messages, setMessages] = React.useState([
         { from: "bot", text: "Halo, Saya Lumbung Mataraman Bot. Ada yang bisa saya bantu?" },
     ]);
 
-    const sendMessage = () => {
-        if (!message.trim()) return;
+    const sendMessage = async () => {
+        if (!message.trim() || loading) return;
 
+        const userMessage = message;
+
+        // tampilkan pesan user + typing indicator
         setMessages((prev) => [
             ...prev,
-            { from: "user", text: message },
-            { from: "bot", text: "Terima kasih, pesan Anda sudah kami terima" },
+            { from: "user", text: userMessage },
+            { from: "bot", text: "sedang mengetik..." },
         ]);
 
         setMessage("");
+        setLoading(true);
+
+        try {
+            const res = await fetch(`${import.meta.env.VITE_PUBLIC_WEBHOOK_PROD}/chat`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    prompt: userMessage,
+                }),
+            });
+
+            const data = await res.json();
+
+            setMessages((prev) => {
+                // hapus typing indicator terakhir
+                const updated = [...prev];
+                updated.pop();
+
+                return [
+                    ...updated,
+                    { from: "bot", text: data.answer },
+                ];
+            });
+
+        } catch (error) {
+            setMessages((prev) => {
+                const updated = [...prev];
+                updated.pop();
+
+                return [
+                    ...updated,
+                    { from: "bot", text: "Maaf, bot sedang bermasalah." },
+                ];
+            });
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -236,14 +281,16 @@ function LumbungMataramanBot() {
                         Lumbung Mataraman Bot
                     </div>
 
+                    {/* Messages */}
                     <div className="flex-1 p-3 space-y-2 overflow-y-auto text-sm">
                         {messages.map((m, i) => (
                             <div
                                 key={i}
-                                className={`max-w-[80%] px-3 py-2 rounded-lg ${m.from === "user"
+                                className={`max-w-[80%] px-3 py-2 rounded-lg ${
+                                    m.from === "user"
                                         ? "bg-green-600 text-white ml-auto"
                                         : "bg-gray-100 text-gray-800"
-                                    }`}
+                                }`}
                             >
                                 {m.text}
                             </div>
@@ -259,10 +306,12 @@ function LumbungMataramanBot() {
                             placeholder="Ketik pesan..."
                             className="flex-1 border rounded-lg px-3 py-2 text-sm focus:outline-none"
                             onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+                            disabled={loading}
                         />
                         <button
                             onClick={sendMessage}
-                            className="bg-green-600 text-white px-4 rounded-lg text-sm hover:bg-green-700"
+                            disabled={loading}
+                            className="bg-green-600 text-white px-4 rounded-lg text-sm hover:bg-green-700 disabled:opacity-50"
                         >
                             Kirim
                         </button>
@@ -272,6 +321,7 @@ function LumbungMataramanBot() {
         </>
     );
 }
+
 
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
