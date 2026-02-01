@@ -1,3 +1,4 @@
+import LoadContent from "@/components/admin/load-content";
 import MainLayout from "@/components/main-layout"
 import GalleryView from "@/components/public/marketplace/gallery-view";
 import GridView from "@/components/public/marketplace/grid-view";
@@ -12,9 +13,9 @@ enum LayoutViewEnum {
 
 export default function MarketplaceScreen() {
   const [selectedlayout, setSelectedlayout] = React.useState<LayoutViewEnum>(LayoutViewEnum.gallery);
-  const { data, error, loading } = useFetchMarketPlaceData();
+  const { data, loading } = useFetchMarketPlaceData();
 
-  if (loading) return <div>Loading {error}</div>
+  if (loading) return <LoadContent />
 
   return (
     <MainLayout>

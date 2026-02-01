@@ -210,8 +210,6 @@ export function SouvenirSection({ souvenridata, data }: { souvenridata: Souvenir
         { id: idx, component: <SouvenirCard imagePlaceHolder={souv.imageplaceholder} price={souv.price} title={souv.name} /> }
     ))
 
-    console.log(data)
-
     const usenavigate = useNavigate();
 
     return (

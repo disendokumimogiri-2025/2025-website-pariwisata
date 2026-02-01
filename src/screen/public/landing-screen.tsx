@@ -1,3 +1,4 @@
+import LoadContent from "@/components/admin/load-content";
 import MainLayout from "@/components/main-layout"
 import { AboutSection, EducationSection, HeroSection, SouvenirSection, WisataKulinerSection } from "@/components/public/landing/landing-sections";
 import { useFetchLandingData } from "@/hooks/connection-hook/public-connection";
@@ -6,7 +7,7 @@ export default function LandingScreen() {
 
     const { data, blogdata, edudata, souvenirdata, error, loading, gallery } = useFetchLandingData();
 
-    if (loading) return <div>loading</div>
+    if (loading) return <LoadContent />
     if (error) return <div>error</div>
 
     return (

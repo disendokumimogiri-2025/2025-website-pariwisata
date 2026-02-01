@@ -2,6 +2,11 @@ import { Instagram, LogIn, MapPinned, Menu, X, Youtube } from 'lucide-react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import bumdesSponsor from "../../../public/images/sponsor-bumdes.png"
+import danakeistimewaanSponsor from "../../../public/images/sponsor-dana-keistimewaan.png"
+import danapraneurSponsor from "../../../public/images/sponsor-desa-praneur.png"
+import sriharjoSponsor from "../../../public/images/sponsor-sriharjo.png"
+
 function PrematureNavigationBar() {
     const [open, setOpen] = React.useState(false);
     const [scrolled, setScrolled] = React.useState(false);
@@ -153,7 +158,7 @@ function PrematureFooterNavigation() {
 
                         <div className='h-32 xl:h-20 w-full col-span-4 flex justify-center items-center'>
                             <img
-                                src="./public/images/sponsor-sriharjo.png"
+                                src={sriharjoSponsor}
                                 alt="sponsor-sriharjo"
                                 className='h-full max-h-24 xl:max-h-16 object-contain'
                             />
@@ -161,7 +166,7 @@ function PrematureFooterNavigation() {
 
                         <div className='h-32 xl:h-20 w-full col-span-4 flex justify-center items-center'>
                             <img
-                                src="./public/images/sponsor-dana-keistimewaan.png"
+                                src={danakeistimewaanSponsor}
                                 alt="sponsor-keistimewaan"
                                 className='h-full max-h-24 xl:max-h-16 object-contain'
                             />
@@ -169,7 +174,7 @@ function PrematureFooterNavigation() {
 
                         <div className='h-32 xl:h-20 w-full col-span-4 xl:col-span-2 flex justify-center items-center'>
                             <img
-                                src="./public/images/sponsor-desa-praneur.png"
+                                src={danapraneurSponsor}
                                 alt="sponsor-despranur"
                                 className='h-full max-h-24 xl:max-h-16 object-contain'
                             />
@@ -177,7 +182,7 @@ function PrematureFooterNavigation() {
 
                         <div className='h-32 xl:h-20 w-full col-span-4 xl:col-span-2 flex justify-center items-center'>
                             <img
-                                src="./public/images/sponsor-bumdes.png"
+                                src={bumdesSponsor}
                                 alt="sponsor-bumdes"
                                 className='h-full max-h-24 xl:max-h-16 object-contain'
                             />

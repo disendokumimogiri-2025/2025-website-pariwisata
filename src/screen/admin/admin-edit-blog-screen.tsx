@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
+import LoadContent from "@/components/admin/load-content";
 import PrematureMainLayout from "@/components/admin/premature-layout";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
@@ -204,7 +205,8 @@ export default function AdminEditBlogScreen() {
     }
   }
 
-  if (loading) return <div>{loading}</div>
+  if (loading) return <LoadContent />
+
   if (error) return <div>{error}{message}</div>
 
   return (

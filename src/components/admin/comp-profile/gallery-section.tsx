@@ -35,6 +35,7 @@ import React from "react";
 import { useCreateGallery, useDeleteData } from "@/hooks/connection-hook/admin-connection";
 import { AdminCreateEditContext } from "@/context-provider/context-provider-type";
 import { ReduceChar } from "@/helper/word-reducer";
+import LoadContent from "../load-content";
 
 function AddGalleryItem() {
     const [order, setOrder] = React.useState(0);
@@ -46,7 +47,7 @@ function AddGalleryItem() {
     const [gallerydesc, setGallerydesc] = React.useState("");
     const [galleryimage, setGalleryimage] = React.useState("");
 
-    const { createGallery, message, loading, error } = useCreateGallery();
+    const { createGallery, loading, error } = useCreateGallery();
 
     const handlesubmit = async () => {
         try {
@@ -64,7 +65,7 @@ function AddGalleryItem() {
         }
     }
 
-    if (loading) return <div>{message}</div>
+    if (loading) return <LoadContent message="Mohon tunggu sebentar" />
 
     return (
         <Dialog>

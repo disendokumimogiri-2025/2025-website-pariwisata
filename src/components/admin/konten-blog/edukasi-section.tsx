@@ -35,6 +35,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useCreateEducation, useDeleteData, useUpdateEdu } from "@/hooks/connection-hook/admin-connection";
 import { getDriveId } from "@/helper/drive-helper";
 import type { EducationData } from "@/types/data-types";
+import LoadContent from "../load-content";
 
 function UpdateStatus({ data }: { data: EducationData }) {
   const { updateEduData, message } = useUpdateEdu(data._id ?? '');
@@ -116,7 +117,7 @@ function AddEducationItem() {
     }
   }
 
-  if (loading) return <div>{message}</div>
+  if (loading) return <LoadContent />
 
   return (
     <Dialog>

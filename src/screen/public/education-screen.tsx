@@ -1,3 +1,4 @@
+import LoadContent from "@/components/admin/load-content";
 import MainLayout from "@/components/main-layout";
 import EducationCard from "@/components/public/education/education-card";
 import { useFetchMarketPlaceData } from "@/hooks/connection-hook/public-connection";
@@ -5,8 +6,8 @@ import { useFetchMarketPlaceData } from "@/hooks/connection-hook/public-connecti
 
 export default function EducationScreen() {
 
-  const { data, error, loading } = useFetchMarketPlaceData();
-  if (loading) return <div>Loading {error}</div>
+  const { data, loading } = useFetchMarketPlaceData();
+  if (loading) return <LoadContent />
 
   const educationdata = data?.educations;
 

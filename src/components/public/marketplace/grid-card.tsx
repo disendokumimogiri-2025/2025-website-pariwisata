@@ -9,7 +9,7 @@ export default function GridCard({ d }: { d: BlogData }) {
 
     return (
         <div className="w-full bg-white rounded-md border border-gray-300 hover:shadow-md">
-            <div className="group w-full aspect-8/9 relative overflow-hidden rounded-lg shadow-md">
+            <div className="group w-full aspect-8/9 relative overflow-hidden rounded-lg shadow-md" onClick={() => usenavigate(`/blog/${d._id}`)}>
                 {/* Background Image */}
                 <img
                     src={getRenderableDriveLink(d.imageplaceholder) ?? defaultHeroBackground}

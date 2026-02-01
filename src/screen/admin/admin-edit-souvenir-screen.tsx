@@ -24,6 +24,7 @@ import { getDriveId, getRenderableDriveLink } from "@/helper/drive-helper";
 import type { SouvenirData } from "@/types/data-types";
 import { useUpdateSouvenir } from "@/hooks/connection-hook/admin-connection";
 import { SquarePen } from "lucide-react";
+import LoadContent from "@/components/admin/load-content";
 
 export function EditMetadatasouvenirCard({ d }: { d: SouvenirData }) {
   const [name, setName] = React.useState(d.name);
@@ -33,7 +34,7 @@ export function EditMetadatasouvenirCard({ d }: { d: SouvenirData }) {
   const [stock, setStock] = React.useState(d.stock)
   const [price, setPrice] = React.useState(d.price)
 
-  const { message, updateSouvenirData, loading } = useUpdateSouvenir(d._id ?? '')
+  const { updateSouvenirData, loading } = useUpdateSouvenir(d._id ?? '')
 
   const handleSubmit = async () => {
     try {
@@ -52,7 +53,7 @@ export function EditMetadatasouvenirCard({ d }: { d: SouvenirData }) {
     }
   }
 
-  if (loading) return <div>{message}</div>
+  if (loading) return <LoadContent />
 
   return (
     <div>
@@ -139,7 +140,7 @@ export function EditContentSouvenirCard({ d }: { d: SouvenirData }) {
   const [contentdesc, setContentdesc] = React.useState(d.contentdesc);
   const [contentimage, setContentimage] = React.useState(getRenderableDriveLink(d.contentimage));
 
-  const { message, updateSouvenirData, loading } = useUpdateSouvenir(d._id ?? '')
+  const { updateSouvenirData, loading } = useUpdateSouvenir(d._id ?? '')
 
   const handleSubmit = async () => {
     try {
@@ -158,7 +159,7 @@ export function EditContentSouvenirCard({ d }: { d: SouvenirData }) {
     }
   }
 
-  if (loading) return <div>{message}</div>
+  if (loading) return <LoadContent />
 
   return (
     <div>
@@ -231,7 +232,7 @@ export default function AdminEditSouvenirScreen() {
 
   if (!souvData) return null
 
-  if (loading) return <div>{loading}</div>
+  if (loading) return <LoadContent />
   if (error) return <div>{error}{message}</div>
 
   return (

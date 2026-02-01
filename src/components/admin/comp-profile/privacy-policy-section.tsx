@@ -23,6 +23,7 @@ import {
 import { AdminCreateEditContext } from "@/context-provider/context-provider-type"
 import { useUpdatePagesCOntent } from "@/hooks/connection-hook/admin-connection"
 import type { InternalWebsitePageData } from "@/types/data-types"
+import LoadContent from "../load-content"
 
 
 type TermsComponentProps = {
@@ -209,7 +210,7 @@ export default function PrivacyPolicySection() {
     } catch { console.log(error, message) }
   }
 
-  if (loading) return <div>loading</div>
+  if (loading) return <LoadContent />
 
 
   return (

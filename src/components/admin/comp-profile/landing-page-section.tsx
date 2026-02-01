@@ -29,6 +29,7 @@ import { AdminCreateEditContext } from '@/context-provider/context-provider-type
 import type { InternalWebsitePageData } from '@/types/data-types'
 import { useUpdatePagesCOntent } from '@/hooks/connection-hook/admin-connection'
 import { getDriveId, getRenderableDriveLink } from '@/helper/drive-helper'
+import LoadContent from '../load-content'
 
 
 const tabs = [
@@ -130,7 +131,7 @@ function ContentEditor({ data }: { data: InternalWebsitePageData }) {
     } catch { console.log(error, message) }
   }
 
-  if (loading) return <div>loading</div>
+  if (loading) return <LoadContent />
 
 
   return (

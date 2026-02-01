@@ -13,9 +13,6 @@ export default function BlogScreen() {
 
   if (!blogData) return null
 
-  console.log(blogData?.blogcover, blogData)
-  console.log(getRenderableDriveLink(blogData?.blogcover))
-
   return (
     <MainLayout>
       <div className="min-h-screen">

@@ -1,3 +1,4 @@
+import LoadContent from "@/components/admin/load-content";
 import MainLayout from "@/components/main-layout";
 import { SouvenirCardView } from "@/components/public/landing/courasel-cards";
 import { useFetchMarketPlaceData } from "@/hooks/connection-hook/public-connection";
@@ -5,7 +6,7 @@ import type { SouvenirData } from "@/types/data-types";
 import React from "react";
 
 export default function SouvenirScreen() {
-    const { loading, error, data } = useFetchMarketPlaceData();
+    const { loading, data } = useFetchMarketPlaceData();
     const [tempData, setTempData] = React.useState<SouvenirData[]>(data?.souvenirs ?? []);
 
     const [query, setQuery] = React.useState("");
@@ -22,7 +23,7 @@ export default function SouvenirScreen() {
         setFoundData(filtered);
     }, [query, tempData]);
 
-    if (loading) return <div>{error}</div>
+    if (loading) return <LoadContent />
 
     console.log(foundData, tempData)
 

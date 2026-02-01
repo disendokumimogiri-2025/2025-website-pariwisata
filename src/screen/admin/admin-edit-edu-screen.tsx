@@ -25,13 +25,14 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Field, FieldLabel } from "@/components/ui/field"
 import { useUpdateEdu } from "@/hooks/connection-hook/admin-connection";
+import LoadContent from "@/components/admin/load-content";
 
 export function EditMetadataEducationCard({ d }: { d: EducationData }) {
   const [name, setName] = React.useState(d.name);
   const [desc, setDesc] = React.useState(d.desc);
   const [imageplaceholder, setImageplaceholder] = React.useState(getRenderableDriveLink(d.imageplaceholder));
 
-  const { message, updateEduData, loading } = useUpdateEdu(d._id ?? '')
+  const { updateEduData, loading } = useUpdateEdu(d._id ?? '')
 
   const handleSubmit = async () => {
     try {
@@ -49,7 +50,7 @@ export function EditMetadataEducationCard({ d }: { d: EducationData }) {
     }
   }
 
-  if (loading) return <div>{message}</div>
+  if (loading) return <LoadContent />
 
   return (
     <div>
@@ -117,7 +118,7 @@ export function EditContentEducationCard({ d }: { d: EducationData }) {
   const [contentdesc, setContentdesc] = React.useState(d.contentdesc);
   const [contentimage, setContentimage] = React.useState(getRenderableDriveLink(d.contentimage));
 
-  const { message, updateEduData, loading } = useUpdateEdu(d._id ?? '')
+  const { updateEduData, loading } = useUpdateEdu(d._id ?? '')
 
   const handleSubmit = async () => {
     try {
@@ -135,7 +136,7 @@ export function EditContentEducationCard({ d }: { d: EducationData }) {
     }
   }
 
-  if (loading) return <div>{message}</div>
+  if (loading) return <LoadContent />
 
   return (
     <div>
@@ -206,7 +207,7 @@ export default function AdminEditEduScreen() {
 
   if (!eduData) return null
 
-  if (loading) return <div>{loading}</div>
+  if (loading) return <LoadContent />
   if (error) return <div>{error}{message}</div>
 
   return (

@@ -27,6 +27,7 @@ import type { AdderContentBlogComponentProps, BlogContentData, BlogData } from "
 import { AdminCreateEditContext } from "@/context-provider/context-provider-type";
 import { getDriveId, getRenderableDriveLink } from "@/helper/drive-helper";
 import { useCreateBlog } from "@/hooks/connection-hook/admin-connection";
+import LoadContent from "@/components/admin/load-content";
 
 export function AdderContentBlogComponent({
   data,
@@ -146,7 +147,7 @@ export default function AdminCreateBlogScreen() {
     });
   };
 
-  if (loading) return <div>Loading Screen</div>
+  if (loading) return <LoadContent />
 
 
   return (

@@ -1,19 +1,10 @@
-import { CustomerContext } from '@/context-provider/context-provider-type';
-import { Instagram, LogIn, MapPinned, Menu, ShoppingBag, X, Youtube } from 'lucide-react';
+import { Bot, Instagram, LogIn, MapPinned, Menu, X, Youtube } from 'lucide-react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-
-import {
-    Sheet,
-    SheetContent,
-    SheetDescription,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger,
-} from "@/components/ui/sheet"
-import { Button } from "@/components/ui/button";
-import { Input } from './ui/input';
-import { Textarea } from './ui/textarea';
+import bumdesSponsor from "../../public/images/sponsor-bumdes.png"
+import danakeistimewaanSponsor from "../../public/images/sponsor-dana-keistimewaan.png"
+import danapraneurSponsor from "../../public/images/sponsor-desa-praneur.png"
+import sriharjoSponsor from "../../public/images/sponsor-sriharjo.png"
 
 function NavigationBar() {
     const [open, setOpen] = React.useState(false);
@@ -169,7 +160,7 @@ function FooterNavigation() {
 
                         <div className='h-32 xl:h-20 w-full col-span-4 flex justify-center items-center'>
                             <img
-                                src="./public/images/sponsor-sriharjo.png"
+                                src={sriharjoSponsor}
                                 alt="sponsor-sriharjo"
                                 className='h-full max-h-24 xl:max-h-16 object-contain'
                             />
@@ -177,7 +168,7 @@ function FooterNavigation() {
 
                         <div className='h-32 xl:h-20 w-full col-span-4 flex justify-center items-center'>
                             <img
-                                src="./public/images/sponsor-dana-keistimewaan.png"
+                                src={danakeistimewaanSponsor}
                                 alt="sponsor-keistimewaan"
                                 className='h-full max-h-24 xl:max-h-16 object-contain'
                             />
@@ -185,7 +176,7 @@ function FooterNavigation() {
 
                         <div className='h-32 xl:h-20 w-full col-span-4 xl:col-span-2 flex justify-center items-center'>
                             <img
-                                src="./public/images/sponsor-desa-praneur.png"
+                                src={danapraneurSponsor}
                                 alt="sponsor-despranur"
                                 className='h-full max-h-24 xl:max-h-16 object-contain'
                             />
@@ -193,7 +184,7 @@ function FooterNavigation() {
 
                         <div className='h-32 xl:h-20 w-full col-span-4 xl:col-span-2 flex justify-center items-center'>
                             <img
-                                src="./public/images/sponsor-bumdes.png"
+                                src={bumdesSponsor}
                                 alt="sponsor-bumdes"
                                 className='h-full max-h-24 xl:max-h-16 object-contain'
                             />
@@ -206,9 +197,84 @@ function FooterNavigation() {
     );
 }
 
-export default function MainLayout({ children }: { children: React.ReactNode }) {
-    const { setName, bookItem, setMessages, name, messages } = React.useContext(CustomerContext);
 
+function LumbungMataramanBot() {
+    const [open, setOpen] = React.useState(false);
+    const [message, setMessage] = React.useState("");
+    const [messages, setMessages] = React.useState([
+        { from: "bot", text: "Halo, Saya Lumbung Mataraman Bot. Ada yang bisa saya bantu?" },
+    ]);
+
+    const sendMessage = () => {
+        if (!message.trim()) return;
+
+        setMessages((prev) => [
+            ...prev,
+            { from: "user", text: message },
+            { from: "bot", text: "Terima kasih, pesan Anda sudah kami terima" },
+        ]);
+
+        setMessage("");
+    };
+
+    return (
+        <>
+            {/* Floating Button */}
+            <button
+                onClick={() => setOpen(!open)}
+                className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-green-600 text-white shadow-lg flex items-center justify-center hover:bg-green-700 transition"
+            >
+                <Bot />
+            </button>
+
+            {/* Chat Panel */}
+            {open && (
+                <div className="fixed bottom-24 right-6 z-50 w-80 h-96 bg-white rounded-xl shadow-xl flex flex-col overflow-hidden">
+
+                    {/* Header */}
+                    <div className="bg-green-600 text-white p-3 font-semibold">
+                        Lumbung Mataraman Bot
+                    </div>
+
+                    <div className="flex-1 p-3 space-y-2 overflow-y-auto text-sm">
+                        {messages.map((m, i) => (
+                            <div
+                                key={i}
+                                className={`max-w-[80%] px-3 py-2 rounded-lg ${m.from === "user"
+                                        ? "bg-green-600 text-white ml-auto"
+                                        : "bg-gray-100 text-gray-800"
+                                    }`}
+                            >
+                                {m.text}
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Input */}
+                    <div className="p-2 border-t flex gap-2">
+                        <input
+                            type="text"
+                            value={message}
+                            onChange={(e) => setMessage(e.target.value)}
+                            placeholder="Ketik pesan..."
+                            className="flex-1 border rounded-lg px-3 py-2 text-sm focus:outline-none"
+                            onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+                        />
+                        <button
+                            onClick={sendMessage}
+                            className="bg-green-600 text-white px-4 rounded-lg text-sm hover:bg-green-700"
+                        >
+                            Kirim
+                        </button>
+                    </div>
+                </div>
+            )}
+        </>
+    );
+}
+
+
+export default function MainLayout({ children }: { children: React.ReactNode }) {
     return (
         <div className="w-full min-h-screen relative">
             {/* Navbar */}
@@ -216,96 +282,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
 
             {children}
 
-            <Sheet>
-                <SheetTrigger asChild>
-                    <Button
-                        variant="default"
-                        className="fixed bottom-6 right-6 z-50 rounded-full w-16 h-16 shadow-lg flex items-center justify-center">
-                        <ShoppingBag className="w-7 h-7" />
-                    </Button>
-                </SheetTrigger>
-
-                <SheetContent className="flex flex-col">
-                    <SheetHeader>
-                        <SheetTitle>Pengajuan Pemesanan</SheetTitle>
-                        <SheetDescription>
-                            Silakan lengkapi data pemesanan Anda. Tim kami akan menghubungi Anda
-                            setelah pengajuan diterima.
-                        </SheetDescription>
-                    </SheetHeader>
-
-                    {/* CONTENT */}
-                    <div className="flex-1 overflow-y-auto mt-6 space-y-6 px-10">
-                        {/* Identitas Pemesan */}
-                        <div className="space-y-2">
-                            <h3 className="text-sm font-semibold text-muted-foreground">
-                                Identitas Pemesan
-                            </h3>
-                            <Input
-                                placeholder="Nama Anda"
-                                value={name ?? ""}
-                                onChange={(e) => setName(e.target.value)}
-                            />
-                        </div>
-
-                        {/* Daftar Item */}
-                        <div className="space-y-3">
-                            <h3 className="text-sm font-semibold text-muted-foreground">
-                                Item Pesanan
-                            </h3>
-
-                            {bookItem && bookItem.length > 0 ? (
-                                <div className="space-y-3">
-                                    {bookItem.map((item, idx) => (
-                                        <div
-                                            key={idx}
-                                            className="flex items-center justify-between rounded-lg border p-3"
-                                        >
-                                            <div>
-                                                <p className="font-medium">{item.name}</p>
-                                                <p className="text-xs text-muted-foreground">
-                                                    {item.priceOffered}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            ) : (
-                                <div className="text-sm text-muted-foreground border rounded-lg p-4 text-center">
-                                    Belum ada item yang dipilih
-                                </div>
-                            )}
-                        </div>
-
-                        {/* Catatan */}
-                        <div className="space-y-2">
-                            <h3 className="text-sm font-semibold text-muted-foreground">
-                                Catatan Tambahan
-                            </h3>
-                            <Textarea
-                                placeholder="Tulis catatan atau kebutuhan khusus..."
-                                value={messages ?? ""}
-                                onChange={(e) => setMessages(e.target.value)}
-                            />
-                        </div>
-                    </div>
-
-                    {/* FOOTER ACTION */}
-                    <div className="border-t pt-4 space-y-2 px-10">
-                        <Button
-                            className="w-full"
-                            disabled={!name || !bookItem || bookItem.length === 0}
-                        >
-                            Ajukan Pemesanan
-                        </Button>
-
-                        <p className="text-xs text-muted-foreground text-center">
-                            Dengan mengajukan pemesanan, Anda menyetujui untuk dihubungi oleh tim kami.
-                        </p>
-                    </div>
-                </SheetContent>
-
-            </Sheet>
+            <LumbungMataramanBot />
 
             <FooterNavigation />
         </div>
