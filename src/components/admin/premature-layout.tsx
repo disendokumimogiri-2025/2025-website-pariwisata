@@ -148,7 +148,41 @@ function PrematureFooterNavigation() {
             <div className='w-full h-full flex flex-col gap-10 md:items-center'>
                 <div className='text-white space-y-5'>
                     <h2 className='text-2xl'>Sponsor</h2>
-                    <div className='space-y-4'>
+
+                    <div className='grid grid-cols-4 xl:h-[16vw] gap-2'>
+
+                        <div className='h-32 xl:h-20 w-full col-span-4 flex justify-center items-center'>
+                            <img
+                                src="./public/images/sponsor-sriharjo.png"
+                                alt="sponsor-sriharjo"
+                                className='h-full max-h-24 xl:max-h-16 object-contain'
+                            />
+                        </div>
+
+                        <div className='h-32 xl:h-20 w-full col-span-4 flex justify-center items-center'>
+                            <img
+                                src="./public/images/sponsor-dana-keistimewaan.png"
+                                alt="sponsor-keistimewaan"
+                                className='h-full max-h-24 xl:max-h-16 object-contain'
+                            />
+                        </div>
+
+                        <div className='h-32 xl:h-20 w-full col-span-4 xl:col-span-2 flex justify-center items-center'>
+                            <img
+                                src="./public/images/sponsor-desa-praneur.png"
+                                alt="sponsor-despranur"
+                                className='h-full max-h-24 xl:max-h-16 object-contain'
+                            />
+                        </div>
+
+                        <div className='h-32 xl:h-20 w-full col-span-4 xl:col-span-2 flex justify-center items-center'>
+                            <img
+                                src="./public/images/sponsor-bumdes.png"
+                                alt="sponsor-bumdes"
+                                className='h-full max-h-24 xl:max-h-16 object-contain'
+                            />
+                        </div>
+
                     </div>
                 </div>
             </div>
