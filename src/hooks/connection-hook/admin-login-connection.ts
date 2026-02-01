@@ -8,6 +8,11 @@ interface LoginResponse {
   expiredAt?: number;
 }
 
+interface CheckMeResponse {
+  msg: string;
+  error?: string;
+}
+
 interface ErrorResponse {
   msg?: string;
   error?: string;
@@ -16,7 +21,7 @@ interface ErrorResponse {
 export const useAdminLogin = <TPayload>() => {
   const [message, setMessage] = useState<string | null>(null);
   const [token, setToken] = useState<string | null>(
-    localStorage.getItem(STORAGE_KEY_AUTHTOKEN)
+    localStorage.getItem(STORAGE_KEY_AUTHTOKEN),
   );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -29,7 +34,7 @@ export const useAdminLogin = <TPayload>() => {
     try {
       const response = await axios.post<LoginResponse>(
         `${import.meta.env.VITE_PUBLIC_API_URl_PROD}/login`,
-        payload
+        payload,
       );
 
       // backend return 200
@@ -50,10 +55,7 @@ export const useAdminLogin = <TPayload>() => {
 
       if (err instanceof AxiosError) {
         const errorData = err.response?.data as ErrorResponse;
-        errorMessage =
-          errorData?.msg ||
-          errorData?.error ||
-          err.message;
+        errorMessage = errorData?.msg || errorData?.error || err.message;
       } else if (err instanceof Error) {
         errorMessage = err.message;
       }
@@ -78,5 +80,59 @@ export const useAdminLogin = <TPayload>() => {
     error,
     login,
     logout,
+  };
+};
+
+export const useGetMeSessionStatus = <TPayload>() => {
+  const [message, setMessage] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [allowed, setAllowed] = useState(false);
+
+  const getMe = async (payload: TPayload): Promise<boolean> => {
+    setLoading(true);
+    setError(null);
+    setMessage(null);
+
+    try {
+      const response = await axios.post<CheckMeResponse>(
+        `${import.meta.env.VITE_PUBLIC_API_URl_PROD}/me`,
+        payload,
+      );
+
+      if (response.status !== 200) {
+        console.log(response.status);
+        throw new Error(response.data.msg || "Check Session failed");
+      }
+
+      const { msg } = response.data;
+
+      setMessage(msg);
+      setAllowed(true);
+
+      return allowed;
+    } catch (err: unknown) {
+      let errorMessage = "Something went wrong";
+
+      if (err instanceof AxiosError) {
+        const errorData = err.response?.data as ErrorResponse;
+        errorMessage = errorData?.msg || errorData?.error || err.message;
+      } else if (err instanceof Error) {
+        errorMessage = err.message;
+      }
+
+      setError(errorMessage);
+      throw new Error(errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return {
+    message,
+    loading,
+    error,
+    getMe,
+    allowed
   };
 };
